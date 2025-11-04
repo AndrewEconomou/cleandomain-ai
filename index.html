@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CleanDomain.ai – Fair • Clear • Verified</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>
+  <div class="logo">
+    <img src="assets/cleandomain-logo.svg" alt="CleanDomain Logo" />
+    <h1>CleanDomain.ai</h1>
+  </div>
+  <button id="themeToggle" title="Toggle light/dark">🌓</button>
+</header>
+
+<section class="hero">
+  <h2>Clean, Fair, Verified — The Global Fair-Value Domain Comparison Engine</h2>
+  <div class="search-box">
+    <input id="searchInput" type="text" placeholder="Search a domain name…" />
+    <button onclick="searchDomain()">Compare</button>
+  </div>
+</section>
+
+<section id="results">
+  <table>
+    <thead>
+      <tr>
+        <th>Registrar</th><th>Year-1</th><th>Renewal</th>
+        <th>3-Year Total</th><th>Privacy</th><th>Reliability</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+  <p id="note">All prices are illustrative demo data.</p>
+</section>
+
+<footer>
+  <nav>
+    <a href="#">About</a> |
+    <a href="#">Integrity Policy</a> |
+    <a href="#">Contact</a> |
+    <a href="#">Affiliate Disclosure</a>
+  </nav>
+  <p class="powered">Powered by <strong>CleanEval™ Integrity Framework</strong></p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
