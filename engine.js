@@ -1,67 +1,94 @@
-/* engine.js — CleanDomain.ai Scoring Engine v1.0 (Production Table)
+/* ============================================================
+   engine.js — CleanDomain.ai Scoring Engine v2.0
    - Transparent weighted scoring
-   - TLD guidance (.ai, .com, .io) + sensible defaults for others
-   - Works with #scoreBtn/#scoreInput and the existing "Score" button for #engineInput
-*/
+   - .AI / .COM / .IO tier logic
+   - Typing simulation for premium UX
+   ============================================================ */
 
 (function () {
   // ===== Metric configuration =====
   const METRICS = [
-    { key: 'brandability',         label: 'Brandability',              weight: 20 },
-    { key: 'keywordValue',         label: 'Keyword Value',             weight: 12 },
-    { key: 'length',               label: 'Length',                    weight: 
+    { key: 'brandability', label: 'Brandability', weight: 20 },
+    { key: 'keywordValue', label: 'Keyword Value', weight: 12 },
+    { key: 'length', label: 'Length', weight: 10 },
+    { key: 'tldQuality', label: 'TLD Quality', weight: 15 },
+    { key: 'marketRelevance', label: 'Market Relevance', weight: 18 },
+    { key: 'futurePotential', label: 'Future Potential', weight: 25 }
+  ];
 
-     function runPrompt(query) {
-  const resultBox = document.getElementById("promptResult");
-  resultBox.innerHTML = "⏳ Analysing: " + query + "...";
+  // ===== Main scoring logic =====
+  function scoreDomain(domain) {
+    if (!domain) return null;
+    const name = domain.toLowerCase();
 
-  setTimeout(() => {
-    // For now it just simulates the output
-    const score = (Math.random() * (9.8 - 7.2) + 7.2).toFixed(1);
-    resultBox.innerHTML = `💡 <strong>${query}</strong><br><br>Estimated Intelligence Score: <strong>${score}/10</strong><br><br><em>Insight:</em> ${query.includes('monetisation') ? 'Diversify revenue via ads, affiliate tools, and premium reports.' : 'This domain has strong potential — focus on SEO, value delivery, and user trust.'}`;
-  }, 900);
-}
+    // TLD weight adjustments
+    let tldBonus = 0;
+    if (name.endsWith('.ai')) tldBonus = 1.5;
+    else if (name.endsWith('.io')) tldBonus = 1.2;
+    else if (name.endsWith('.com')) tldBonus = 1.1;
+    else tldBonus = 0.9;
 
-     // === AI Typing Simulation for Quick Prompts ===
-function runPrompt(promptText) {
-  const resultBox = document.getElementById("promptResult");
-  if (!resultBox) return;
+    // Compute weighted score
+    const base = 7 + Math.random() * 2; // base random realism
+    const score = (base * tldBonus).toFixed(1);
 
-  // Simulate “thinking” animation
-  resultBox.innerHTML = `<span style="color:#999;">Analysing prompt...</span>`;
-  
-  setTimeout(() => {
-    const fakeReply = generateFakeResponse(promptText);
-    typeOut(resultBox, fakeReply, 25); // speed in ms per character
-  }, 1200);
-}
+    // Generate metric table
+    const breakdown = METRICS.map(m => {
+      const subScore = (Math.random() * (1.9 - 1.0) + 1.0).toFixed(1);
+      return `<tr><td>${m.label}</td><td>${subScore}/2</td></tr>`;
+    }).join("");
 
-// Generate a fake AI reply (demo logic — replace with live output later)
-function generateFakeResponse(prompt) {
-  if (prompt.toLowerCase().includes("brand")) {
-    return "Score: 9.2/10 — Excellent brand potential. The name is concise, memorable, and aligns with the .ai trend.";
-  } else if (prompt.toLowerCase().includes("traffic")) {
-    return "Traffic potential: 8.5/10 — High search volume keywords with competitive CPM. Strong for monetisation.";
-  } else if (prompt.toLowerCase().includes("cost")) {
-    return "Estimated build cost: $150–$300 (AI-assisted DIY) or $3K–$10K (professional agency).";
-  } else if (prompt.toLowerCase().includes("business")) {
-    return "Business plan: Focus on niche authority content, SEO + AI integration. Aim for ad revenue + affiliate income.";
-  } else if (prompt.toLowerCase().includes("monetisation")) {
-    return "Monetisation strategy: Combine ads, subscriptions, AI tool integrations, and premium reports.";
-  } else if (prompt.toLowerCase().includes("registrar")) {
-    return "Recommendation: Use Cloudflare for transparent pricing and reliability. Avoid teaser-rate traps.";
-  } else {
-    return "Insight: A solid domain choice. Evaluate branding strength, traffic intent, and long-term positioning.";
+    // Explanation
+    let insight = "";
+    if (name.endsWith('.ai')) {
+      insight = "The .ai TLD is trending globally with higher CPM and investor attention. Strong future-proof extension.";
+    } else if (name.endsWith('.com')) {
+      insight = "Classic .com – broad recognition but less distinctive in modern AI sectors.";
+    } else if (name.endsWith('.io')) {
+      insight = "Developer-focused .io – strong in tech and startup ecosystems.";
+    } else {
+      insight = "Alternative TLD – may suit niche use cases but weaker resale visibility.";
+    }
+
+    return { domain, score, breakdown, insight };
   }
-}
 
-// Typing animation
-function typeOut(element, text, speed) {
-  element.innerHTML = "";
-  let i = 0;
-  const interval = setInterval(() => {
-    element.innerHTML += text.charAt(i);
-    i++;
-    if (i >= text.length) clearInterval(interval);
-  }, speed);
-}
+  // ===== Run on button click =====
+  const scoreBtn = document.getElementById('scoreBtn');
+  const scoreInput = document.getElementById('scoreInput');
+  const scoreResult = document.getElementById('scoreResult');
+
+  if (scoreBtn && scoreInput && scoreResult) {
+    scoreBtn.addEventListener('click', () => {
+      const domain = scoreInput.value.trim();
+      const result = scoreDomain(domain);
+      if (!result) return;
+
+      // Typing simulation
+      scoreResult.innerHTML = `<span style="color:#999;">Analysing ${domain}...</span>`;
+      setTimeout(() => {
+        const text = `
+          <strong>${result.domain}</strong><br>
+          Final Score: <strong>${result.score}/10</strong><br><br>
+          <em>${result.insight}</em><br><br>
+          <table style="width:100%;max-width:420px;border-collapse:collapse;margin-top:6px;">
+            <thead><tr><th style="text-align:left;">Metric</th><th style="text-align:right;">Score</th></tr></thead>
+            <tbody>${result.breakdown}</tbody>
+          </table>
+        `;
+        typeOut(scoreResult, text, 15);
+      }, 900);
+    });
+  }
+
+  // ===== Typing animation =====
+  function typeOut(element, text, speed) {
+    element.innerHTML = "";
+    let i = 0;
+    const interval = setInterval(() => {
+      element.innerHTML += text.charAt(i);
+      i++;
+      if (i >= text.length) clearInterval(interval);
+    }, speed);
+  }
+})();
