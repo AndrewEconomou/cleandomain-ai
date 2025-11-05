@@ -127,3 +127,35 @@ body{
 .site-footer{border-top:1px solid rgba(255,255,255,.06)}
 .footer-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:12px;flex-wrap:wrap}
 .badge{background:rgba(255,255,255,.06);padding:8px 12px;border-radius:999px}
+/* === Theme Toggle System === */
+body {
+  background: #ffffff;
+  color: #111111;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.dark-mode {
+  background: #0e0e0e;
+  color: #eaeaea;
+}
+
+.dark-mode a {
+  color: #91b8ff;
+}
+
+.dark-mode .primary-btn,
+.dark-mode .glow-btn {
+  background: #1a1a1a;
+  color: #eaeaea;
+  border: 1px solid #444;
+}
+
+.dark-mode .cd-table {
+  background: #1a1a1a;
+  color: #ddd;
+}
+
+.dark-mode footer {
+  background: #111;
+  color: #ccc;
+}
