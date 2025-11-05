@@ -1,11 +1,10 @@
-// CleanDomain.ai Demo Engine
-// Lightweight front-end scorer for domain quality demonstration
-// (Not production-grade — illustrative logic for scoring framework)
+// CleanDomain.ai – Demo Fair-Value Engine v1.0
+// Lightweight front-end scorer (illustrative only)
 
 document.addEventListener("DOMContentLoaded", () => {
-  const input = document.querySelector("input[placeholder='e.g., marketnews.ai']");
-  const button = document.querySelector("button, input[type='button'], input[type='submit']");
-  const resultBox = document.createElement("p");
+  const input = document.getElementById("scoreInput");
+  const button = document.getElementById("scoreBtn");
+  const resultBox = document.createElement("div");
   resultBox.style.marginTop = "12px";
   resultBox.style.fontWeight = "600";
   resultBox.style.fontSize = "1.1em";
@@ -13,36 +12,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!input || !button) return;
 
-  button.addEventListener("click", (e) => {
-    e.preventDefault();
-    const domain = input.value.trim().toLowerCase();
+  button.addEventListener("click", () => {
+    const domain = input.value.trim();
     if (!domain) {
-      resultBox.textContent = "Please enter a domain to score.";
+      resultBox.textContent = "Please enter a domain.";
+      resultBox.style.color = "gray";
       return;
     }
 
-    // Basic scoring metrics
+    // --- Simple demo scoring logic ---
     let score = 50;
+    if (domain.includes("ai")) score += 25;
+    if (domain.includes("iq")) score += 15;
+    if (domain.length <= 10) score += 10;
+    if (domain.includes("fx") || domain.includes("forex")) score += 15;
 
-    // 1. Shorter domains = higher score
-    if (domain.length < 10) score += 20;
-    else if (domain.length < 15) score += 10;
+    score = Math.min(100, score);
+    let color = "orange";
+    if (score >= 85) color = "green";
+    else if (score >= 70) color = "gold";
 
-    // 2. Presence of “ai”, “iq”, or “tech” keywords
-    if (domain.includes("ai")) score += 10;
-    if (domain.includes("iq")) score += 8;
-    if (domain.includes("tech")) score += 6;
-
-    // 3. Strong financial or innovation keywords
-    const strongWords = ["crypto", "forex", "finance", "trade", "invest", "clean", "domain"];
-    for (const word of strongWords) {
-      if (domain.includes(word)) score += 5;
-    }
-
-    // 4. Remove outliers
-    score = Math.min(100, Math.max(0, score));
-
-    // Display result
-    resultBox.textContent = `💡 Domain Score for "${domain}": ${score}/100`;
+    resultBox.innerHTML = `<span style="color:${color}">Score: ${score}/100</span>`;
   });
 });
