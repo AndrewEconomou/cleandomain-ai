@@ -53,7 +53,22 @@
 <div id="scoreTable"></div>
 <script src="engine.js"></script>
 
-        
+      <!-- QUICK PROMPT PANEL -->
+<section class="quick-prompts">
+  <div class="container">
+    <h2>Try Smart Prompts</h2>
+    <p class="muted">Click a suggestion to see how the engine thinks.</p>
+    <div class="prompt-grid">
+      <button class="glow-btn" onclick="runPrompt('Score just the brand ability of marketnews.ai')">Score Brand Ability</button>
+      <button class="glow-btn" onclick="runPrompt('Score traffic potential and CPM for forexiq.ai')">Traffic & CPM</button>
+      <button class="glow-btn" onclick="runPrompt('Estimate website build cost for fxai.ai')">Cost My Website</button>
+      <button class="glow-btn" onclick="runPrompt('Give a strong business plan for exchangeiq.ai')">Business Plan</button>
+      <button class="glow-btn" onclick="runPrompt('Recommend a domain plus website monetisation strategy')">Monetisation Strategy</button>
+      <button class="glow-btn" onclick="runPrompt('Which registrar offers best reliability and renewal rates for .ai domains?')">Registrar Advice</button>
+    </div>
+    <div id="promptResult" class="engine-result" aria-live="polite"></div>
+  </div>
+</section>  
 
     <!-- TABLE -->
     <section class="table-wrap">
