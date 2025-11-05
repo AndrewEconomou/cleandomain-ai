@@ -43,13 +43,15 @@
       </div>
     </section>
 
-    <!-- ENGINE -->
-    <section class="engine">
-      <div class="container">
-        <div class="engine-head">
-          <h2>Mini‑Engine: Domain Fair‑Value Score</h2>
-          <p class="engine-copy">Type a domain below and we’ll compute a quick, explainable score (demo).</p>
-        </div>
+    <h2>Mini-Engine: Domain Fair-Value Score</h2>
+<p>Type a domain below and we’ll compute a quick, explainable score (demo).</p>
+
+<input id="domainInput" type="text" placeholder="e.g., marketnews.ai">
+<button id="scoreButton">Score</button>
+
+<div id="scoreResult" style="margin-top:12px;font-weight:600;font-size:1.1em;"></div>
+
+<script src="engine.js"></script>
 
         <div class="engine-row">
           <input id="engineInput" class="engine-input" placeholder="e.g., marketnews.ai" aria-label="Domain to score" />
