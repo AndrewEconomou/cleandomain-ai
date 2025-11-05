@@ -125,5 +125,27 @@
 <!-- JS scripts -->
 <script src="assets/app.js"></script>
 <script src="engine.js"></script>
+  <script src="assets/app.js"></script>
+<script src="engine.js"></script>
+
+<!-- Add this new part below -->
+<script>
+  const toggleButton = document.getElementById("themeToggle");
+  const currentTheme = localStorage.getItem("theme");
+
+  if (currentTheme === "dark") {
+    document.body.classList.add("dark-mode");
+    toggleButton.textContent = "Light";
+  }
+
+  toggleButton.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    const isDark = document.body.classList.contains("dark-mode");
+    toggleButton.textContent = isDark ? "Light" : "Dark";
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+</script>
+</body>
+</html>
 </body>
 </html>
