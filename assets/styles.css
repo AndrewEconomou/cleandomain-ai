@@ -338,3 +338,46 @@ body.dark-mode table {
 body.dark-mode .muted {
   color: #999 !important;
 }
+
+/* === Dark Mode Styles (override-safe) === */
+body.dark-mode {
+  background-color: #0b0b0f !important;
+  color: #e6e6e6 !important;
+}
+
+body.dark-mode header,
+body.dark-mode footer {
+  background-color: #11131a !important;
+}
+
+body.dark-mode .container,
+body.dark-mode section,
+body.dark-mode main {
+  background-color: #0b0b0f !important;
+  color: #e6e6e6 !important;
+}
+
+body.dark-mode .primary-btn,
+body.dark-mode .secondary-btn,
+body.dark-mode .glow-btn {
+  background-color: #2b2f3a !important;
+  color: #f5f5f5 !important;
+  border-color: #444 !important;
+}
+
+body.dark-mode input,
+body.dark-mode textarea {
+  background-color: #181b22 !important;
+  color: #fff !important;
+  border-color: #333 !important;
+}
+
+body.dark-mode table,
+body.dark-mode .cd-table {
+  background-color: #14171e !important;
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .muted {
+  color: #aaa !important;
+}
