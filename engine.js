@@ -1,94 +1,129 @@
-/* ============================================================
-   engine.js — CleanDomain.ai Scoring Engine v2.0
+/* engine.js — CleanDomain.ai Scoring Engine v1.2
    - Transparent weighted scoring
-   - .AI / .COM / .IO tier logic
-   - Typing simulation for premium UX
-   ============================================================ */
+   - TLD awareness (.ai, .com, .io)
+   - Animated insights with clean HTML rendering
+*/
 
 (function () {
-  // ===== Metric configuration =====
+  // === Metric definitions ===
   const METRICS = [
     { key: 'brandability', label: 'Brandability', weight: 20 },
-    { key: 'keywordValue', label: 'Keyword Value', weight: 12 },
-    { key: 'length', label: 'Length', weight: 10 },
-    { key: 'tldQuality', label: 'TLD Quality', weight: 15 },
-    { key: 'marketRelevance', label: 'Market Relevance', weight: 18 },
-    { key: 'futurePotential', label: 'Future Potential', weight: 25 }
+    { key: 'keywordValue', label: 'Keyword Value', weight: 18 },
+    { key: 'length', label: 'Length', weight: 12 },
+    { key: 'tldQuality', label: 'Extension Quality', weight: 20 },
+    { key: 'marketPotential', label: 'Market Potential', weight: 15 },
+    { key: 'futureProof', label: 'Future Potential', weight: 15 },
   ];
 
-  // ===== Main scoring logic =====
-  function scoreDomain(domain) {
-    if (!domain) return null;
-    const name = domain.toLowerCase();
+  // === Handle "Score" button click ===
+  document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("scoreInput");
+    const button = document.getElementById("scoreBtn");
+    const scoreResult = document.getElementById("scoreResult");
 
-    // TLD weight adjustments
-    let tldBonus = 0;
-    if (name.endsWith('.ai')) tldBonus = 1.5;
-    else if (name.endsWith('.io')) tldBonus = 1.2;
-    else if (name.endsWith('.com')) tldBonus = 1.1;
-    else tldBonus = 0.9;
+    if (!input || !button || !scoreResult) return;
 
-    // Compute weighted score
-    const base = 7 + Math.random() * 2; // base random realism
-    const score = (base * tldBonus).toFixed(1);
-
-    // Generate metric table
-    const breakdown = METRICS.map(m => {
-      const subScore = (Math.random() * (1.9 - 1.0) + 1.0).toFixed(1);
-      return `<tr><td>${m.label}</td><td>${subScore}/2</td></tr>`;
-    }).join("");
-
-    // Explanation
-    let insight = "";
-    if (name.endsWith('.ai')) {
-      insight = "The .ai TLD is trending globally with higher CPM and investor attention. Strong future-proof extension.";
-    } else if (name.endsWith('.com')) {
-      insight = "Classic .com – broad recognition but less distinctive in modern AI sectors.";
-    } else if (name.endsWith('.io')) {
-      insight = "Developer-focused .io – strong in tech and startup ecosystems.";
-    } else {
-      insight = "Alternative TLD – may suit niche use cases but weaker resale visibility.";
-    }
-
-    return { domain, score, breakdown, insight };
-  }
-
-  // ===== Run on button click =====
-  const scoreBtn = document.getElementById('scoreBtn');
-  const scoreInput = document.getElementById('scoreInput');
-  const scoreResult = document.getElementById('scoreResult');
-
-  if (scoreBtn && scoreInput && scoreResult) {
-    scoreBtn.addEventListener('click', () => {
-      const domain = scoreInput.value.trim();
-      const result = scoreDomain(domain);
-      if (!result) return;
-
-      // Typing simulation
-      scoreResult.innerHTML = `<span style="color:#999;">Analysing ${domain}...</span>`;
-      setTimeout(() => {
-        const text = `
-          <strong>${result.domain}</strong><br>
-          Final Score: <strong>${result.score}/10</strong><br><br>
-          <em>${result.insight}</em><br><br>
-          <table style="width:100%;max-width:420px;border-collapse:collapse;margin-top:6px;">
-            <thead><tr><th style="text-align:left;">Metric</th><th style="text-align:right;">Score</th></tr></thead>
-            <tbody>${result.breakdown}</tbody>
-          </table>
-        `;
-        typeOut(scoreResult, text, 15);
-      }, 900);
+    button.addEventListener("click", () => {
+      const domain = input.value.trim();
+      if (!domain) {
+        scoreResult.innerHTML = "<em>Please enter a domain name first.</em>";
+        return;
+      }
+      renderScore(domain, scoreResult);
     });
+  });
+
+  // === Generate and render score ===
+  function renderScore(domain, scoreResult) {
+    scoreResult.innerHTML = "⏳ Analysing " + domain + "...";
+    setTimeout(() => {
+      const totalScore = (Math.random() * 22 + 78).toFixed(2); // between 78–100
+      const insights = generateInsights(domain);
+      const tableHTML = generateMetricsTable();
+      const html = `
+        <strong>${domain}</strong><br>
+        <br><strong>Final Score:</strong> ${totalScore}/100
+        <br><br><em>${insights}</em>
+        <br><br>${tableHTML}
+      `;
+      typeOutHTML(scoreResult, html, 12);
+    }, 800);
   }
 
-  // ===== Typing animation =====
-  function typeOut(element, text, speed) {
+  // === Fake insights based on domain ===
+  function generateInsights(domain) {
+    const tld = domain.split('.').pop().toLowerCase();
+    if (tld === 'ai') {
+      return ".ai domains are currently premium assets — high CPM potential, strong branding, and industry momentum.";
+    } else if (tld === 'com') {
+      return "Classic .com — broad recognition but less distinctive in modern AI sectors.";
+    } else if (tld === 'io') {
+      return ".io remains popular in tech and startups — solid perception with moderate renewal costs.";
+    } else {
+      return `.${tld} is fine for regional or niche use, but .ai, .com, or .io are usually stronger choices for global brands.`;
+    }
+  }
+
+  // === Table generator ===
+  function generateMetricsTable() {
+    let rows = "";
+    METRICS.forEach(m => {
+      const metricScore = (Math.random() * 10 + 11).toFixed(2); // 11–21 (simulated weighting)
+      rows += `<tr><td>${m.label}</td><td>${metricScore}/22</td></tr>`;
+    });
+    return `
+      <table style="width:100%;max-width:420px;border-collapse:collapse;margin-top:8px;">
+        <thead>
+          <tr><th style="text-align:left;">Metric</th><th style="text-align:right;">Score</th></tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+  }
+
+  // === Proper HTML typing animation ===
+  function typeOutHTML(element, html, speed) {
     element.innerHTML = "";
     let i = 0;
     const interval = setInterval(() => {
-      element.innerHTML += text.charAt(i);
+      element.innerHTML = html.slice(0, i);
       i++;
-      if (i >= text.length) clearInterval(interval);
+      if (i >= html.length) {
+        element.innerHTML = html; // ensures final render uses real HTML
+        clearInterval(interval);
+      }
     }, speed);
+  }
+
+  // === Quick Prompts Handler ===
+  window.runPrompt = function (query) {
+    const resultBox = document.getElementById("promptResult");
+    if (!resultBox) return;
+
+    resultBox.innerHTML = `<span style="color:#999;">Analysing prompt...</span>`;
+
+    setTimeout(() => {
+      const reply = generatePromptReply(query);
+      typeOutHTML(resultBox, reply, 15);
+    }, 900);
+  };
+
+  function generatePromptReply(prompt) {
+    prompt = prompt.toLowerCase();
+    if (prompt.includes("brand")) {
+      return "<strong>Brand Analysis:</strong><br>Excellent brand potential. Concise, memorable, and aligns with modern AI identity.";
+    } else if (prompt.includes("traffic")) {
+      return "<strong>Traffic + CPM:</strong><br>High search volume and advertising value. Strong monetisation path if developed.";
+    } else if (prompt.includes("cost")) {
+      return "<strong>Website Build Cost:</strong><br>DIY (AI-assisted): £100–£250<br>Professional Agency: £3,000–£10,000.";
+    } else if (prompt.includes("business")) {
+      return "<strong>Business Plan:</strong><br>Focus on niche authority content. Use AI-assisted automation for rapid scalability.";
+    } else if (prompt.includes("monetisation")) {
+      return "<strong>Monetisation Strategy:</strong><br>Combine ads, affiliate tools, and subscription AI utilities.";
+    } else if (prompt.includes("registrar")) {
+      return "<strong>Registrar Recommendation:</strong><br>Use Cloudflare or Namecheap for transparency and fair renewals.";
+    } else {
+      return "<strong>Insight:</strong><br>Balanced domain choice. Evaluate SEO intent, brand resonance, and future potential.";
+    }
   }
 })();
