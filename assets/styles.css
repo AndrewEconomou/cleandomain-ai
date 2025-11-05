@@ -1,0 +1,214 @@
+/* ===========================
+   CleanDomain.ai — Core Styles
+   Version: 1.0 (Dark Pro Theme)
+   =========================== */
+
+:root {
+  --bg: #0a0c10;
+  --bg-alt: #11141a;
+  --text: #e8ecf0;
+  --muted: #8b96a4;
+  --primary: #2e9bff;
+  --accent: #00c0ff;
+  --border: #1e232c;
+  --radius: 8px;
+  --transition: 0.25s ease;
+  --font-main: 'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-main);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+a:hover {
+  color: var(--accent);
+}
+
+.container {
+  width: 90%;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* Header */
+.site-header {
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+.brand .ai {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-right: 8px;
+  box-shadow: 0 0 10px var(--accent);
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 80px 0 60px;
+}
+.hero h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--text);
+}
+.hero .sub {
+  font-size: 1.2rem;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.searchbar {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+.searchbar input {
+  width: 60%;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-alt);
+  color: var(--text);
+}
+.searchbar button {
+  background: var(--primary);
+  border: none;
+  color: white;
+  padding: 12px 18px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.searchbar button:hover {
+  background: var(--accent);
+}
+
+/* Micro KPIs */
+.micro-kpis {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 40px;
+}
+.micro-kpis div {
+  text-align: left;
+  max-width: 220px;
+}
+.micro-kpis strong {
+  display: block;
+  color: var(--accent);
+}
+
+/* Engine Section */
+.engine-row {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+}
+.engine-input {
+  width: 50%;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-alt);
+  color: var(--text);
+}
+.secondary-btn {
+  margin-left: 10px;
+  background: var(--primary);
+  border: none;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 600;
+  transition: background var(--transition);
+}
+.secondary-btn:hover {
+  background: var(--accent);
+}
+
+.engine-result {
+  text-align: center;
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+/* Table */
+.table-wrap {
+  background: var(--bg-alt);
+  padding: 60px 0;
+}
+.cd-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.cd-table th, .cd-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.cd-table th {
+  text-align: left;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.cd-table tbody tr:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+/* Footer */
+.site-footer {
+  background: var(--bg-alt);
+  border-top: 1px solid var(--border);
+  padding: 18px 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.badge {
+  color: var(--accent);
+  font-weight: 600;
+}
