@@ -331,3 +331,14 @@ body.dark-mode.glow-mode .notice{
 @media (max-width:900px){ .calc-grid{ grid-template-columns: 1fr 1fr; } }
 @media (max-width:560px){ .calc-grid{ grid-template-columns: 1fr; } }
 body.dark-mode .calc-field input { background:#181b22; color:#fff; border:1px solid #333; }
+/* --- Chart Widget --- */
+.chart-wrap { background: var(--surface); padding: 2rem 0; }
+.chart-controls { display:flex; gap:1rem; align-items:flex-end; flex-wrap:wrap; margin-bottom: 1rem; }
+.chart-controls label { display:block; font-weight:700; margin-bottom:.35rem; }
+.chart-controls input, .chart-controls select { padding:.55rem; border:1px solid #ccc; border-radius:8px; }
+.indicators { display:flex; gap:1rem; align-items:center; }
+#chartArea { width:100%; height:420px; border-radius:10px; border:1px solid rgba(0,0,0,.08); }
+#rsiArea { width:100%; height:140px; margin-top:.6rem; border-radius:10px; border:1px solid rgba(0,0,0,.08); }
+body.dark-mode .chart-controls input,
+body.dark-mode .chart-controls select { background:#181b22; color:#fff; border:1px solid #333; }
+body.dark-mode #chartArea, body.dark-mode #rsiArea { border-color: rgba(255,255,255,.1); }
