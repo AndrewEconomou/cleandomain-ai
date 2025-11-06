@@ -266,5 +266,29 @@ document.getElementById("sellBtn").addEventListener("click", () => {
 });
 </script>
 
-</body>
+</body<!-- === FULL REPORT MODAL === -->
+<div id="reportModal" class="modal-overlay" style="display:none;">
+  <div class="modal">
+    <button id="closeModal" class="close-btn" aria-label="Close">×</button>
+    <h2>Request Your Full Domain Report</h2>
+    <p class="muted">Enter your details below and our AI will prepare a detailed valuation & insights report.</p>
+
+    <form id="reportForm" class="report-form">
+      <label for="reportName">Name</label>
+      <input id="reportName" type="text" placeholder="Your name" required>
+
+      <label for="reportEmail">Email</label>
+      <input id="reportEmail" type="email" placeholder="you@example.com" required>
+
+      <label for="reportDomain">Domain</label>
+      <input id="reportDomain" type="text" placeholder="e.g. marketnews.ai" required>
+
+      <button type="submit" class="primary-btn" style="width:100%;">Request My Report</button>
+    </form>
+
+    <div id="reportSuccess" class="success-msg" style="display:none;">
+      ✅ Your report request has been saved — AI will process it shortly.
+    </div>
+  </div>
+</div>>
 </html>
