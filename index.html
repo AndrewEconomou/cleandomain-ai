@@ -1,36 +1,170 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CleanDomain.ai</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+  <title>CleanDomain.ai — Fair-Value Domain Comparison Engine</title>
+  <meta name="description" content="Clean, transparent, and unbiased domain price comparison. Registrar reliability, 1-year vs renewal, 3-year totals, and more." />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>CleanDomain.ai</h1>
-      <p>AI-powered domain quality & evaluation engine</p>
-    </header>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="pulse-dot" aria-hidden="true"></div>
+        <a href="/" class="brand-name">CleanDomain<span class="ai">.ai</span></a>
+      </div>
+      <nav class="nav">
+        <button id="themeToggle" class="ghost-btn" aria-label="Toggle dark mode">Dark</button>
+      </nav>
+    </div>
+  </header>
 
-    <!-- Domain Search -->
-    <section id="domain-search">
-      <input id="domain-input" type="text" placeholder="Enter a domain (e.g. example.ai)" />
-      <button id="search-btn">Search</button>
-      <div id="search-results"></div>
+  <!-- HERO / SEARCH -->
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Fair-Value Domain Comparison</h1>
+        <p class="sub">Transparent pricing. Reliable registrars. No pay-to-rank. Ever.</p>
+
+        <form id="searchForm" class="searchbar" onsubmit="return false;">
+          <input id="domainInput" type="text" placeholder="Search a TLD or keyword (e.g., .ai, finance, crypto)" inputmode="text" spellcheck="false" />
+          <button id="searchBtn" class="primary-btn" type="submit">Search</button>
+        </form>
+
+        <div class="micro-kpis">
+          <div><strong>Real 3-Year Cost</strong><span>Registration + Renewal math done for you</span></div>
+          <div><strong>Reliability Index</strong><span>Support, uptime, speed — combined</span></div>
+          <div><strong>Promo Honesty</strong><span>Teaser vs renewal clearly flagged</span></div>
+        </div>
+
+        <div id="searchResultMsg" style="margin-top:1rem;font-weight:600;font-size:1.05em;"></div>
+      </div>
     </section>
 
-    <!-- Engine Output -->
-    <section id="engine-section">
-      <button id="run-engine">Run Engine</button>
-      <pre id="engine-output"></pre>
+    <!-- SCORING + PROMPT ENGINE -->
+    <section class="container" style="padding:2rem 1rem;">
+      <h2>Mini-Engine: Domain Fair-Value Score</h2>
+      <p>Type a domain below or use the search bar above — we’ll compute a quick, explainable score (demo).</p>
+
+      <input id="scoreInput" type="text" placeholder="e.g., marketnews.ai" />
+      <button id="scoreBtn" class="primary-btn">Score</button>
+
+      <div id="scoreResult" style="margin-top:12px;font-weight:600;font-size:1.05em;"></div>
+
+      <section class="quick-prompts" style="margin-top:2rem;">
+        <h2>Try Smart Prompts</h2>
+        <p class="muted">Click a suggestion to see how the engine thinks.</p>
+        <div class="prompt-grid">
+          <button class="glow-btn" onclick="runPrompt('Score just the brand ability of marketnews.ai')">Score Brand Ability</button>
+          <button class="glow-btn" onclick="runPrompt('Score traffic potential and CPM for forexiq.ai')">Traffic & CPM</button>
+          <button class="glow-btn" onclick="runPrompt('Estimate website build cost for fxai.ai')">Cost My Website</button>
+          <button class="glow-btn" onclick="runPrompt('Give a strong business plan for exchangeiq.ai')">Business Plan</button>
+          <button class="glow-btn" onclick="runPrompt('Recommend a domain plus website monetisation strategy')">Monetisation Strategy</button>
+          <button class="glow-btn" onclick="runPrompt('Which registrar offers best reliability and renewal rates for .ai domains?')">Registrar Advice</button>
+        </div>
+        <div id="promptResult" class="engine-result" aria-live="polite"></div>
+      </section>
     </section>
 
-    <footer>
-      <p>© 2025 CleanDomain.ai — All Rights Reserved</p>
-    </footer>
-  </div>
+    <!-- TABLE -->
+    <section class="table-wrap">
+      <div class="container">
+        <div class="table-head">
+          <h2>Registrar Snapshot (Demo Data)</h2>
+          <p class="muted">Placeholder demo — live API integration coming soon.</p>
+        </div>
 
+        <div class="table-scroll">
+          <table class="cd-table" aria-describedby="demoTableHelp">
+            <thead>
+              <tr>
+                <th>Registrar</th>
+                <th>1-Year</th>
+                <th>Renewal</th>
+                <th>3-Year Total</th>
+                <th>Privacy</th>
+                <th>Reliability</th>
+                <th>Promo</th>
+                <th>Last Update</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <!-- future data -->
+            </tbody>
+          </table>
+        </div>
+        <p id="demoTableHelp" class="muted small">‘3-Year Total’ = Year-1 + 2×Renewal. Reliability blends support, uptime, trust.</p>
+      </div>
+    </section>
+
+    <!-- DISCLAIMER -->
+    <section class="disclaimer">
+      <div class="container">
+        <div class="notice">
+          <strong>Pricing Notice:</strong> Some registrars advertise low first-year teaser rates. We always show <em>renewal</em> and <em>3-year totals</em> so you won’t get trapped by hidden long-term costs.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="left">
+        <span class="muted small">© CleanDomain.ai — All rights reserved.</span>
+      </div>
+      <div class="right">
+        <span class="badge">Powered by Bestimate™ Integrity Framework</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
   <script src="engine.js"></script>
+
+  <script>
+  // === THEME TOGGLE ===
+  const toggleButton = document.getElementById("themeToggle");
+  const currentTheme = localStorage.getItem("theme");
+  if (currentTheme === "dark") {
+    document.body.classList.add("dark-mode");
+    toggleButton.textContent = "Light";
+  }
+  toggleButton.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    const isDark = document.body.classList.contains("dark-mode");
+    toggleButton.textContent = isDark ? "Light" : "Dark";
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+
+  // === SEARCH BAR ===
+  document.getElementById('searchBtn').addEventListener('click', () => {
+    const input = document.getElementById('domainInput').value.trim();
+    const resultMsg = document.getElementById('searchResultMsg');
+    if (!input) {
+      resultMsg.innerHTML = "Please enter a domain or keyword.";
+      return;
+    }
+
+    // Demo search feedback
+    resultMsg.innerHTML = `🔍 Searching for <strong>${input}</strong> ...`;
+    setTimeout(() => {
+      resultMsg.innerHTML = `✅ <strong>${input}</strong> found on 5 registrars. Compare renewal & 3-year cost below ↓`;
+    }, 1200);
+
+    // Pass searched domain into scoring engine input and auto-run
+    const scoreInput = document.getElementById('scoreInput');
+    const scoreButton = document.getElementById('scoreBtn');
+    if (scoreInput && scoreButton) {
+      scoreInput.value = input;
+      // trigger scoring automatically
+      scoreButton.click();
+    }
+  });
+  </script>
 </body>
 </html>
