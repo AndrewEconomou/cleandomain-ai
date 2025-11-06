@@ -146,7 +146,50 @@
 
     <!-- SCRIPTS -->
   <script src="engine.js"></script>
+<script>
+/* === COMPARISON MEMORY + TONE MODE === */
+const historyPanel = document.getElementById("historyPanel");
+const historyList = document.getElementById("historyList");
+const viewMode = document.getElementById("viewMode");
+let history = [];
 
+function addToHistory(domain, score) {
+  history.unshift({ domain, score, view: viewMode.value, time: new Date().toLocaleTimeString() });
+  if (history.length > 3) history.pop();
+  renderHistory();
+}
+
+function renderHistory() {
+  historyList.innerHTML = history
+    .map(h => `<li><strong>${h.domain}</strong> — ${h.score}/10 <em>(${h.view})</em></li>`)
+    .join("");
+  historyPanel.style.display = history.length ? "block" : "none";
+}
+
+// Extend existing scoring demo (hook into scoreBtn)
+const scoreBtn = document.getElementById("scoreBtn");
+if (scoreBtn) {
+  scoreBtn.addEventListener("click", () => {
+    const domain = document.getElementById("scoreInput").value.trim();
+    if (!domain) return;
+
+    const score = (Math.random() * 2 + 8).toFixed(1); // demo random 8–10
+    const mode = viewMode.value;
+
+    const analysis =
+      mode === "investor"
+        ? `${domain} shows strong ROI potential and solid market liquidity.`
+        : `${domain} is highly build-ready with excellent user-brand resonance.`;
+
+    document.getElementById("scoreResult").innerHTML = `
+      <div><strong>Score:</strong> ${score}/10</div>
+      <div>${analysis}</div>
+    `;
+
+    addToHistory(domain, score);
+  });
+}
+</script>
   <script>
   // === THEME TOGGLE ===
   const toggleButton = document.getElementById("themeToggle");
