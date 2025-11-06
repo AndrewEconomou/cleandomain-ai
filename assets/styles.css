@@ -1,5 +1,7 @@
 /* ==========================================================
-   CleanDomain.ai — Unified Style System v3.0
+   CleanDomain.ai — Unified Style System v5.0
+   Mode: Subtle Cinematic Motion (Premium, stable)
+   Bonus: Hidden “Tech Glow” theme via .glow-mode
    Author: Andrew Economou + ChatGPT
    ========================================================== */
 
@@ -22,9 +24,14 @@
   --tableHead:#f4f7ff;
 
   --radius:10px;
+  --radius-lg:16px;
+
+  --shadow-0:0 0 0 rgba(0,0,0,0);
   --shadow-sm:0 1px 4px rgba(0,0,0,.06);
-  --shadow-md:0 2px 8px rgba(0,0,0,.08);
-  --shadow-lg:0 6px 18px rgba(0,0,0,.16);
+  --shadow-md:0 2px 10px rgba(0,0,0,.08);
+  --shadow-lg:0 8px 24px rgba(0,0,0,.14);
+
+  --ring:0 0 0 3px rgba(0,102,255,.12);
 }
 
 body.dark-mode{
@@ -36,9 +43,10 @@ body.dark-mode{
   --line:#222;
   --card:#161920;
   --tableHead:#1d2230;
+  --ring:0 0 0 3px rgba(79,195,247,.18);
 }
 
-/* ---------- Mobile Stability Patch (iOS Safari/Chrome) ---------- */
+/* ---------- Mobile Stability Patch ---------- */
 html,body{
   width:100%;
   min-height:100%;
@@ -57,73 +65,98 @@ html,body{
 a{color:var(--brand);text-decoration:none}
 a:hover{text-decoration:underline}
 input,textarea,button,select{font-size:16px !important;-webkit-text-size-adjust:none}
-button{cursor:pointer;transition:transform .2s ease, box-shadow .25s ease}
-button:active{transform:scale(.98)}
-
-/* ---------- Layout ---------- */
+button{cursor:pointer;transition:transform .15s ease, box-shadow .25s ease}
+button:active{transform:scale(.985)}
 .container{max-width:960px;margin:0 auto;padding:0 1rem}
 section,header,footer{max-width:100vw;overflow-x:hidden}
+
+/* ---------- Reduce motion (accessibility) ---------- */
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important}
+  html{scroll-behavior:auto}
+}
 
 /* ---------- Header ---------- */
 .site-header{
   position:sticky;top:0;z-index:999;
   background:rgba(255,255,255,.92);
-  backdrop-filter:blur(12px);
+  backdrop-filter:blur(10px);
   border-bottom:1px solid rgba(0,0,0,.06);
+  transition:background .4s ease, box-shadow .4s ease, backdrop-filter .4s ease;
+}
+.site-header.scrolled{
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(16px);
+  box-shadow:0 6px 16px rgba(0,0,0,.08);
 }
 body.dark-mode .site-header{
-  background:rgba(10,10,15,.85);
+  background:rgba(12,12,16,.85);
   border-bottom:1px solid rgba(255,255,255,.08);
-  box-shadow:0 0 12px rgba(0,150,255,.10);
+}
+body.dark-mode .site-header.scrolled{
+  background:rgba(10,12,18,.86);
+  box-shadow:0 6px 18px rgba(0,150,255,.12);
 }
 .header-inner{display:flex;align-items:center;justify-content:space-between;padding:.75rem 0}
-.brand-name{font-weight:800;font-size:1.25rem;color:var(--text);letter-spacing:-.15px}
+
+.brand-name{font-weight:900;font-size:1.22rem;color:var(--text);letter-spacing:-.15px}
 .brand-name .ai{color:var(--brand)}
 .pulse-dot{width:10px;height:10px;border-radius:50%;background:var(--ok);display:inline-block;margin-right:6px;animation:pulse 2s infinite}
-@keyframes pulse{0%{opacity:.4;transform:scale(.9)}50%{opacity:1;transform:scale(1.1)}100%{opacity:.4;transform:scale(.9)}}
+@keyframes pulse{0%{opacity:.45;transform:scale(.92)}50%{opacity:1;transform:scale(1.08)}100%{opacity:.45;transform:scale(.92)}}
 
 /* ---------- Hero ---------- */
 .hero{
   background:var(--surface);
   border-bottom:1px solid #f0f0f0;
-  padding:2rem 0 1.4rem;
+  padding:2rem 0 1.35rem;
   text-align:center;
 }
+body.dark-mode .hero{border-bottom:1px solid var(--line)}
 .hero .container{position:relative;top:-.4rem}
+
 .hero-title{
-  font-size:2.35rem;font-weight:900;letter-spacing:-.3px;margin:0 0 .6rem;
+  font-size:2.32rem;font-weight:900;letter-spacing:-.3px;margin:0 0 .6rem;
   background:linear-gradient(90deg,var(--brand),var(--brand-3));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
-.sub{font-size:1.05rem;color:var(--sub)}
-body.dark-mode .hero{border-bottom:1px solid var(--line)}
 body.dark-mode .hero-title{
-  background:linear-gradient(90deg,#6ea3ff,#9fd8ff);
+  background:linear-gradient(90deg,#78a7ff,#a6ddff);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
+.sub{font-size:1.05rem;color:var(--sub)}
 
 /* ---------- Search ---------- */
 .searchbar{
-  display:flex;justify-content:center;align-items:center;gap:.5rem;margin:1.2rem 0 1.6rem;
+  display:flex;justify-content:center;align-items:center;gap:.5rem;margin:1.15rem 0 1.5rem;
 }
 .searchbar input{
-  width:60%;padding:.75rem;font-size:1rem;
-  border:1px solid #ccc;border-radius:8px;background:#fff;color:#111;
-  transition:border-color .2s ease, box-shadow .2s ease;
+  width:60%;padding:.78rem 0.9rem;font-size:1rem;
+  border:1px solid #cfd3da;border-radius:8px;background:#fff;color:#111;
+  transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
 }
-.searchbar input:focus{border-color:var(--brand);outline:none;box-shadow:0 0 0 3px rgba(0,102,255,.12)}
-.primary-btn{
-  background:linear-gradient(90deg,var(--brand),var(--brand-2));
-  color:#fff;border:none;border-radius:8px;padding:.75rem 1.2rem;font-weight:700;
-  box-shadow:0 4px 10px rgba(0,100,255,.18);
-}
-.primary-btn:hover{box-shadow:0 6px 16px rgba(0,150,255,.32);transform:translateY(-1px)}
+.searchbar input:focus{border-color:var(--brand);outline:none;box-shadow:var(--ring)}
 body.dark-mode .searchbar input{background:#181b22;border-color:#333;color:#fff}
 
-/* ---------- KPI Strip ---------- */
+.primary-btn{
+  background:linear-gradient(90deg,var(--brand),var(--brand-2));
+  color:#fff;border:none;border-radius:8px;padding:.78rem 1.2rem;font-weight:800;
+  box-shadow:0 4px 12px rgba(0,100,255,.2);
+}
+.primary-btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,150,255,.28)}
+.primary-btn:disabled{opacity:.7;cursor:not-allowed}
+
+/* ---------- Micro KPIs ---------- */
 .micro-kpis{display:flex;justify-content:space-around;flex-wrap:wrap;gap:1rem;margin-top:.6rem}
-.micro-kpis div{font-size:.92rem;color:var(--muted)}
+.micro-kpis div{font-size:.92rem;color:var(--muted);transition:color .25s ease, transform .25s ease}
 .micro-kpis strong{color:var(--text)}
+.micro-kpis div:hover{color:var(--brand);transform:translateY(-1px)}
+body.dark-mode .micro-kpis div:hover{color:#78baff}
+
+/* ---------- Messages ---------- */
+.search-msg{margin-top:1rem;font-weight:800;font-size:1.05em;transition:color .25s ease}
+.search-msg.searching{color:var(--warn);font-style:italic}
+.search-msg.success{color:var(--ok)}
+.search-msg.error{color:var(--bad)}
 
 /* ---------- Engine Result / Score Card ---------- */
 #scoreResult,.engine-result{
@@ -139,44 +172,27 @@ body.dark-mode #scoreResult,body.dark-mode .engine-result{
   border-color:#2b2f3a;color:#eaeaea;box-shadow:0 0 10px rgba(0,150,255,.08);
 }
 
-/* ---------- Quick Prompts ---------- */
-.quick-prompts{background:#fafbff;border-top:1px solid #ececec;border-bottom:1px solid #ececec;padding:2rem 0}
-.quick-prompts h2{text-align:center;margin-bottom:.6rem}
-.quick-prompts p{text-align:center;color:var(--muted);margin-bottom:1.2rem}
-.prompt-grid{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
-.glow-btn{
-  background:#f5f7fb;color:var(--text);border:1px solid #d4d7dd;border-radius:8px;padding:.6rem 1rem;
-}
-.glow-btn:hover{background:#e6ecff;border-color:var(--brand);color:var(--brand)}
-body.dark-mode .quick-prompts{background:#11131a;border-color:var(--line)}
-
-/* ---------- Action Panel, History, Tone Switch ---------- */
-.action-panel{margin-top:1.4rem;padding:1rem;background:#f9fbff;border:1px solid #e1e7ff;border-radius:8px;text-align:center}
+/* ---------- Action Panel / History / Tone ---------- */
+.action-panel{margin-top:1.4rem;padding:1rem;background:#f9fbff;border:1px solid #e1e7ff;border-radius:var(--radius);text-align:center;box-shadow:var(--shadow-0)}
 .action-panel h3{margin-bottom:.4rem}
 .action-panel p{font-size:.95rem;color:var(--sub);margin-bottom:1rem}
 .action-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem}
-.cta-btn{background:var(--brand);color:#fff;border:none;border-radius:8px;padding:.6rem 1rem;font-weight:700}
+.cta-btn{background:var(--brand);color:#fff;border:none;border-radius:8px;padding:.6rem 1rem;font-weight:800}
 .cta-btn:hover{background:#004ecc}
 body.dark-mode .action-panel{background:var(--card);border-color:#2a2a2a}
 body.dark-mode .cta-btn{background:#2b2f3a}
 body.dark-mode .cta-btn:hover{background:#3b3f4a}
 
-.history-panel{display:none;margin-top:1.2rem;padding:1rem;background:#f8faff;border:1px solid #e4e9ff;border-radius:8px}
+.history-panel{display:none;margin-top:1.2rem;padding:1rem;background:#f8faff;border:1px solid #e4e9ff;border-radius:var(--radius)}
 .history-panel h3{margin-bottom:.5rem;font-size:1.05rem}
 .history-panel ul{list-style:none;padding-left:0}
 .history-panel li{padding:.25rem 0;color:#333}
 body.dark-mode .history-panel{background:#181b22;border-color:#2b2f3a;color:#ddd}
 
 .tone-switch{margin-top:1rem;text-align:right}
-.tone-switch label{font-weight:700;margin-right:.4rem}
+.tone-switch label{font-weight:800;margin-right:.4rem}
 .tone-switch select{padding:.3rem .6rem;border-radius:6px;border:1px solid #ccc}
 body.dark-mode .tone-switch select{background:#1b1e26;color:#fff;border-color:#333}
-
-/* ---------- Search Status Messages ---------- */
-.search-msg{margin-top:1rem;font-weight:700;font-size:1.05em;transition:color .25s ease}
-.search-msg.searching{color:var(--warn);font-style:italic}
-.search-msg.success{color:var(--ok)}
-.search-msg.error{color:var(--bad)}
 
 /* ---------- Table ---------- */
 .table-wrap{background:var(--surface);padding:2rem 0}
@@ -184,17 +200,18 @@ body.dark-mode .tone-switch select{background:#1b1e26;color:#fff;border-color:#3
 .table-head p{color:var(--muted)}
 .cd-table{width:100%;border-collapse:collapse;font-size:.95rem}
 .cd-table th,.cd-table td{border:1px solid rgba(0,0,0,.06);padding:.7rem;text-align:left}
-.cd-table th{background:var(--tableHead);font-weight:700;color:#333}
+.cd-table th{background:var(--tableHead);font-weight:800;color:#333}
 .cd-table tr:nth-child(even){background:#fafafa}
-.cd-table tr td:nth-child(2){color:var(--brand);font-weight:700}
-body.dark-mode .cd-table th,.body.dark-mode .cd-table td{border-color:rgba(255,255,255,.08)}
+.cd-table tr td:nth-child(2){color:var(--brand);font-weight:800}
 body.dark-mode .cd-table th{background:var(--tableHead);color:#d9e1ff}
 body.dark-mode .cd-table td{color:#a5b4ff;border-color:#2d3347}
-body.dark-mode .cd-table tr td:nth-child(2){color:#73b4ff}
+body.dark-mode .cd-table tr:hover{background:rgba(0,150,255,.06)}
+.cd-table tr{transition:background .22s ease, transform .22s ease}
+.cd-table tr:hover{background:rgba(0,102,255,.05);transform:scale(1.001)}
 
 /* ---------- Disclaimer ---------- */
 .disclaimer{background:#f5f7fa;padding:1.5rem 0}
-.notice{background:#fff;padding:1rem;border-radius:8px;border:1px solid #eee;color:#444}
+.notice{background:#fff;padding:1rem;border-radius:var(--radius);border:1px solid #eee;color:#444;position:relative;overflow:hidden}
 body.dark-mode .disclaimer{background:#0e1117}
 body.dark-mode .notice{background:#14171e;border-color:#2a2a2a;color:#ddd}
 
@@ -204,47 +221,49 @@ body.dark-mode .notice{background:#14171e;border-color:#2a2a2a;color:#ddd}
   border-top:1px solid var(--line);
   padding:1rem 0;margin-top:2rem;
   box-shadow:inset 0 1px 0 rgba(0,0,0,.06);
+  transition:background .3s ease;
 }
 .footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
-.badge{background:var(--brand);color:#fff;font-size:.8rem;padding:.3rem .7rem;border-radius:6px}
+.badge{background:var(--brand);color:#fff;font-size:.8rem;padding:.35rem .7rem;border-radius:6px}
 body.dark-mode .site-footer{box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
 
-/* ---------- Modal (Glass) ---------- */
+/* ---------- Modal (Glass, fixed) ---------- */
 #reportModal{
   position:fixed;inset:0;
-  background:rgba(0,0,0,.35);backdrop-filter:blur(6px);
+  background:rgba(0,0,0,.38);backdrop-filter:blur(6px);
   display:none;align-items:center;justify-content:center;
-  z-index:9999;opacity:0;animation:fadeInModal .4s ease forwards;
+  z-index:9999;opacity:0;animation:fadeInModal .35s ease forwards;
 }
-@keyframes fadeInModal{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
+@keyframes fadeInModal{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:scale(1)}}
 .modal-content{
   position:relative;
-  background:rgba(255,255,255,.78);backdrop-filter:blur(12px);
-  border-radius:16px;padding:2rem 1.6rem;width:90%;max-width:420px;
-  box-shadow:0 4px 25px rgba(0,0,0,.15);animation:modalUp .35s ease;color:#111;
+  background:rgba(255,255,255,.82);backdrop-filter:blur(12px);
+  border-radius:var(--radius-lg);padding:2rem 1.6rem;width:90%;max-width:420px;
+  box-shadow:0 10px 26px rgba(0,0,0,.18);animation:modalUp .32s ease;color:#111;
 }
-@keyframes modalUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-#closeModal{position:absolute;top:1rem;right:1rem;font-size:1.4rem;background:none;border:none;cursor:pointer;color:#444;transition:.3s}
-#closeModal:hover{color:#000;transform:scale(1.08)}
+@keyframes modalUp{from{transform:translateY(18px);opacity:0}to{transform:translateY(0);opacity:1}}
+#closeModal{position:absolute;top:1rem;right:1rem;font-size:1.4rem;background:none;border:none;cursor:pointer;color:#444;transition:.25s}
+#closeModal:hover{color:#000;transform:scale(1.06)}
 
-.report-form label{display:block;margin-top:.8rem;font-weight:700}
+.report-form label{display:block;margin-top:.8rem;font-weight:800}
 .report-form input{
-  width:100%;padding:.65rem;border:1px solid #ccc;border-radius:8px;margin-top:.35rem;font-size:1rem;background:#fff;color:#111;
+  width:100%;padding:.68rem;border:1px solid #cfd3da;border-radius:8px;margin-top:.35rem;font-size:1rem;background:#fff;color:#111;
 }
+.report-form input:focus{outline:none;box-shadow:var(--ring);border-color:var(--brand)}
 #reportForm button.primary-btn{
   background:linear-gradient(90deg,#007aff,#4fc3f7);
-  color:#fff;border:none;border-radius:8px;padding:.8rem 1.2rem;width:100%;font-weight:800;
-  box-shadow:0 0 12px rgba(0,122,255,.35);transition:transform .2s ease, box-shadow .25s ease;
+  color:#fff;border:none;border-radius:8px;padding:.85rem 1.2rem;width:100%;font-weight:900;
+  box-shadow:0 0 12px rgba(0,122,255,.35);
 }
-#reportForm button.primary-btn:hover{transform:scale(1.03);box-shadow:0 0 18px rgba(0,122,255,.6)}
+#reportForm button.primary-btn:hover{transform:translateY(-1px);box-shadow:0 0 18px rgba(0,122,255,.6)}
 .success-msg{
   display:none;
   text-align:center;background:rgba(0,200,83,.1);color:#00c853;
-  border:1px solid rgba(0,200,83,.3);border-radius:10px;padding:1rem;font-weight:800;margin-top:.8rem;
+  border:1px solid rgba(0,200,83,.28);border-radius:10px;padding:1rem;font-weight:900;margin-top:.9rem;
 }
 
 body.dark-mode #reportModal{background:rgba(0,0,0,.6)}
-body.dark-mode .modal-content{background:rgba(25,25,30,.78);color:#f0f0f0;box-shadow:0 4px 20px rgba(0,0,0,.7)}
+body.dark-mode .modal-content{background:rgba(25,25,30,.78);color:#f0f0f0;box-shadow:0 8px 28px rgba(0,0,0,.6)}
 body.dark-mode #closeModal{color:#ccc}
 body.dark-mode #closeModal:hover{color:#fff}
 body.dark-mode .report-form input{background:#20232a;color:#fff;border:1px solid #333}
@@ -261,402 +280,46 @@ body.dark-mode #reportForm button.primary-btn{background:linear-gradient(90deg,#
   .hero-title{font-size:1.95rem;line-height:1.28}
 }
 
-/* ---------- Focus states (a11y) ---------- */
+/* ---------- Focus states ---------- */
 :focus-visible{outline:3px solid rgba(0,102,255,.35);outline-offset:2px;border-radius:6px}
-/* === ENGINE-READY BUTTON MODE v1.0 === */
-button.loading {
-  pointer-events: none;
-  opacity: 0.75;
-  background: linear-gradient(90deg, #005bea, #00c6fb) !important;
-  box-shadow: 0 0 12px rgba(0, 150, 255, 0.3);
-  position: relative;
-  overflow: hidden;
-}
 
-button.loading::after {
-  content: "";
-  position: absolute;
-  top: 0; left: -100%;
-  width: 100%; height: 100%;
-  background: linear-gradient(120deg, rgba(255,255,255,0.15), rgba(255,255,255,0.4), rgba(255,255,255,0.15));
-  animation: shimmer 1.5s infinite;
+/* ---------- Engine Button States ---------- */
+button.loading{
+  pointer-events:none;opacity:.8;
+  background:linear-gradient(90deg,#005bea,#00c6fb) !important;
+  box-shadow:0 0 12px rgba(0,150,255,.3);
+  position:relative;overflow:hidden;
 }
+button.loading::after{
+  content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(120deg,rgba(255,255,255,.15),rgba(255,255,255,.4),rgba(255,255,255,.15));
+  animation:shimmer 1.5s infinite;
+}
+@keyframes shimmer{100%{left:100%}}
+button.flash{animation:flashBlue .8s ease}
+@keyframes flashBlue{0%{box-shadow:0 0 0 rgba(0,150,255,0)}50%{box-shadow:0 0 16px rgba(0,150,255,.7)}100%{box-shadow:0 0 0 rgba(0,150,255,0)}}
 
-@keyframes shimmer {
-  100% { left: 100%; }
-}
-
-/* Subtle flash when AI completes */
-button.flash {
-  animation: flashBlue 0.8s ease;
-}
-@keyframes flashBlue {
-  0% { box-shadow: 0 0 0 rgba(0,150,255,0); }
-  50% { box-shadow: 0 0 16px rgba(0,150,255,0.7); }
-  100% { box-shadow: 0 0 0 rgba(0,150,255,0); }
-}
 /* ==========================================================
-   CleanDomain.ai — Dark Mode Visual Fix Patch v4.1
-   Fixes white modal boxes + button text contrast
+   OPTIONAL THEME — “Tech Glow” (toggle with .glow-mode on body)
    ========================================================== */
 
-/* --- Modal Fix --- */
-body.dark-mode .modal,
-body.dark-mode .modal-content {
-  background: rgba(20, 22, 28, 0.92) !important;
-  color: #f1f4ff !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6) !important;
+body.glow-mode .hero-title{
+  background:linear-gradient(90deg,#5af,#0ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
-
-/* --- Form Input Fix --- */
-body.dark-mode .modal input,
-body.dark-mode .report-form input {
-  background: #1c1f28 !important;
-  color: #e5e9f2 !important;
-  border: 1px solid #333 !important;
+body.glow-mode .primary-btn,
+body.glow-mode .cta-btn{
+  background:linear-gradient(90deg,#007aff,#3ac8ff);
+  box-shadow:0 8px 22px rgba(0,120,255,.35);
 }
-
-/* --- CTA Buttons Fix --- */
-body.dark-mode .cta-btn,
-body.dark-mode #reportForm button.primary-btn,
-body.dark-mode .primary-btn {
-  background: linear-gradient(90deg, #007aff, #3ac8ff) !important;
-  color: #ffffff !important;
-  border: none !important;
-  box-shadow: 0 0 10px rgba(0, 100, 255, 0.25) !important;
+body.glow-mode .engine-result,
+body.glow-mode .action-panel,
+body.glow-mode .notice{
+  border-color:rgba(0,150,255,.2);
+  box-shadow:0 8px 24px rgba(0,150,255,.08);
 }
-
-body.dark-mode .cta-btn:hover,
-body.dark-mode .primary-btn:hover {
-  background: linear-gradient(90deg, #0094ff, #00d4ff) !important;
-  box-shadow: 0 0 16px rgba(0, 150, 255, 0.4) !important;
-}
-
-/* --- Engine Result Boxes Fix --- */
-body.dark-mode .engine-result,
-body.dark-mode .notice,
-body.dark-mode .action-panel {
-  background: #15171d !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
-  color: #e5e9f2 !important;
-}
-
-/* --- Prompt Grid Buttons --- */
-body.dark-mode .glow-btn {
-  background: #1b1e26 !important;
-  color: #f0f4ff !important;
-  border: 1px solid #2c3240 !important;
-}
-
-body.dark-mode .glow-btn:hover {
-  background: #273048 !important;
-  border-color: #4ea6ff !important;
-  color: #4ea6ff !important;
-
-}
-/* ==========================================================
-   CleanDomain.ai — Glass Reflection Pack v4.2
-   Adds polished reflections + depth on buttons, panels & modals
-   ========================================================== */
-
-/* --- Universal Glass Overlay Effect --- */
-.glass-reflect {
-  position: relative;
-  overflow: hidden;
-}
-.glass-reflect::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -75%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    125deg,
-    rgba(255, 255, 255, 0.18) 0%,
-    rgba(255, 255, 255, 0.08) 30%,
-    rgba(255, 255, 255, 0.02) 70%
-  );
-  transform: rotate(15deg);
-  pointer-events: none;
-  transition: opacity 0.4s ease, transform 1.2s ease;
-  opacity: 0;
-}
-.glass-reflect:hover::before {
-  transform: rotate(15deg) translateX(30%);
-  opacity: 1;
-}
-
-/* --- Apply Reflection to Core Elements --- */
-.primary-btn,
-.cta-btn,
-.glow-btn,
-#reportForm button.primary-btn,
-.engine-result,
-.modal,
-.notice {
-  position: relative;
-  overflow: hidden;
-}
-.primary-btn::before,
-.cta-btn::before,
-.glow-btn::before,
-#reportForm button.primary-btn::before,
-.engine-result::before,
-.modal::before,
-.notice::before {
-  content: "";
-  position: absolute;
-  top: -100%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    115deg,
-    rgba(255, 255, 255, 0.14) 0%,
-    rgba(255, 255, 255, 0.06) 30%,
-    rgba(255, 255, 255, 0) 80%
-  );
-  opacity: 0;
-  transition: all 0.6s ease;
-}
-.primary-btn:hover::before,
-.cta-btn:hover::before,
-.glow-btn:hover::before,
-#reportForm button.primary-btn:hover::before,
-.engine-result:hover::before,
-.modal:hover::before,
-.notice:hover::before {
-  opacity: 1;
-  transform: translateY(25%);
-}
-
-/* --- Subtle Depth Shadows --- */
-.primary-btn,
-.cta-btn,
-#reportForm button.primary-btn {
-  box-shadow: 0 4px 14px rgba(0, 100, 255, 0.25);
-}
-.primary-btn:hover,
-.cta-btn:hover,
-#reportForm button.primary-btn:hover {
-  box-shadow: 0 6px 18px rgba(0, 150, 255, 0.35);
-}
-
-/* --- Dark Mode Glass Balance --- */
-body.dark-mode .primary-btn::before,
-body.dark-mode .cta-btn::before,
-body.dark-mode .glow-btn::before,
-body.dark-mode .engine-result::before,
-body.dark-mode .modal::before,
-body.dark-mode .notice::before {
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0.07) 0%,
-    rgba(255, 255, 255, 0.03) 40%,
-    rgba(255, 255, 255, 0) 90%
-  );
-}
-/* ==========================================================
-   CleanDomain.ai — Motion Feel Pack v4.3
-   Adds subtle motion physics & micro-interactions for realism
-   ========================================================== */
-
-/* --- Smooth Scroll Behavior --- */
-html {
-  scroll-behavior: smooth;
-}
-
-/* --- Global Transition Defaults --- */
-* {
-  transition: background 0.3s ease, color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-}
-
-/* --- Button Lift Effect --- */
-.primary-btn,
-.cta-btn,
-.glow-btn,
-#reportForm button.primary-btn {
-  transform: translateY(0);
-}
-.primary-btn:hover,
-.cta-btn:hover,
-.glow-btn:hover,
-#reportForm button.primary-btn:hover {
-  transform: translateY(-2px);
-}
-
-/* --- Card Hover Depth --- */
-.engine-result,
-.action-panel,
-.notice,
-.history-panel {
-  transform: translateY(0);
-}
-.engine-result:hover,
-.action-panel:hover,
-.notice:hover,
-.history-panel:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-}
-body.dark-mode .engine-result:hover,
-body.dark-mode .action-panel:hover,
-body.dark-mode .notice:hover,
-body.dark-mode .history-panel:hover {
-  box-shadow: 0 8px 20px rgba(0, 150, 255, 0.1);
-}
-
-/* --- Table Row Motion --- */
-.cd-table tr {
-  transition: background 0.25s ease, transform 0.25s ease;
-}
-.cd-table tr:hover {
-  background: rgba(0, 102, 255, 0.05);
-  transform: scale(1.002);
-}
-body.dark-mode .cd-table tr:hover {
-  background: rgba(0, 150, 255, 0.06);
-}
-
-/* --- Section Fade-Up Animation on Entry --- */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-section {
-  animation: fadeUp 0.6s ease both;
-  animation-delay: 0.05s;
-}
-
-/* --- Header + Footer Motion --- */
-.site-header {
-  transition: all 0.4s ease;
-}
-.site-header:hover {
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
-}
-body.dark-mode .site-header:hover {
-  box-shadow: 0 2px 15px rgba(0, 150, 255, 0.15);
-}
-
-.site-footer {
-  transition: all 0.4s ease;
-}
-.site-footer:hover {
-  background: rgba(0, 102, 255, 0.03);
-}
-body.dark-mode .site-footer:hover {
-  background: rgba(0, 150, 255, 0.04);
-}
-
-/* --- Micro-KPI Hover Glow --- */
-.micro-kpis div {
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-.micro-kpis div:hover {
-  color: #0066ff;
-  transform: scale(1.03);
-}
-body.dark-mode .micro-kpis div:hover {
-  color: #4ea6ff;
-}
-
-/* --- Prompt Buttons Pop --- */
-.glow-btn {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-.glow-btn:hover {
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 6px 14px rgba(0, 102, 255, 0.2);
-}
-body.dark-mode .glow-btn:hover {
-  box-shadow: 0 6px 14px rgba(79, 195, 247, 0.2);
-}
-/* ==========================================================
-   CleanDomain.ai — Adaptive Depth Pack v4.4
-   Scroll-reactive depth, dynamic shadows & adaptive contrast
-   ========================================================== */
-
-/* --- Scroll Elevation for Header --- */
-.site-header {
-  transition: background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
-}
-.site-header.scrolled {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(18px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-}
-body.dark-mode .site-header.scrolled {
-  background: rgba(10, 12, 18, 0.88);
-  box-shadow: 0 4px 14px rgba(0, 150, 255, 0.1);
-}
-
-/* --- Layered Section Depth --- */
-section {
-  position: relative;
-  z-index: 1;
-}
-section::after {
-  content: "";
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, rgba(0,0,0,0.06), rgba(0,0,0,0));
-  opacity: 0.4;
-  transition: opacity 0.5s ease;
-}
-body.dark-mode section::after {
-  background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0));
-}
-
-/* --- Element Depth Layers --- */
-[data-depth="1"] { box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-[data-depth="2"] { box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
-[data-depth="3"] { box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
-[data-depth="4"] { box-shadow: 0 10px 25px rgba(0,0,0,0.16); }
-body.dark-mode [data-depth="1"] { box-shadow: 0 1px 3px rgba(0,150,255,0.06); }
-body.dark-mode [data-depth="2"] { box-shadow: 0 4px 10px rgba(0,150,255,0.08); }
-body.dark-mode [data-depth="3"] { box-shadow: 0 6px 18px rgba(0,150,255,0.12); }
-body.dark-mode [data-depth="4"] { box-shadow: 0 10px 25px rgba(0,150,255,0.16); }
-
-/* --- Floating Highlight Glow --- */
-.glow-layer {
-  position: relative;
-  z-index: 2;
-  transition: filter 0.4s ease;
-}
-.glow-layer:hover {
-  filter: brightness(1.06) saturate(1.1);
-}
-
-/* --- Adaptive Contrast for Deep Elements --- */
-body.dark-mode .engine-result,
-body.dark-mode .action-panel,
-body.dark-mode .notice,
-body.dark-mode .modal {
-  background: linear-gradient(180deg, #13161b 0%, #0f1114 100%);
-  border-color: rgba(255,255,255,0.05);
-}
-body.dark-mode .hero,
-body.dark-mode main {
-  background: radial-gradient(circle at top left, #0b0c10, #0a0a0e 70%);
-}
-
-/* --- Subtle Perspective on Scroll --- */
-@keyframes scrollParallax {
-  from { transform: translateY(0px); }
-  to { transform: translateY(10px); }
-}
-section:hover {
-  animation: scrollParallax 1.5s ease-in-out infinite alternate;
+body.dark-mode.glow-mode .engine-result,
+body.dark-mode.glow-mode .action-panel,
+body.dark-mode.glow-mode .notice{
+  box-shadow:0 10px 28px rgba(0,180,255,.12);
 }
