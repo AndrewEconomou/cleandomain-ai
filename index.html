@@ -25,132 +25,108 @@
   </header>
 
   <!-- HERO / SEARCH -->
-  <main>
-    <section class="hero">
-      <div class="container">
-     <!-- HERO / SEARCH -->
-<section class="hero">
-  <div class="container">
-    <h1 class="hero-title">Smarter Domain Acquisitions — Powered by AI.</h1>
-    <p class="sub">Transparent pricing. Reliable registrars. Real insights. Built for the next era of digital ownership.</p>
+<main>
+  <!-- HERO / SEARCH -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero-title">Smarter Domain Acquisitions — Powered by AI.</h1>
+      <p class="sub">Transparent pricing. Reliable registrars. Real insights. Built for the next era of digital ownership.</p>
 
-    <form id="searchForm" class="searchbar" onsubmit="return false;">
-      <input id="domainInput" type="text" placeholder="Search a TLD or keyword (e.g., .ai, finance, crypto)" inputmode="text" spellcheck="false" />
-      <button id="searchBtn" class="primary-btn" type="submit">Search</button>
-    </form>
+      <form id="searchForm" class="searchbar" onsubmit="return false;">
+        <input id="domainInput" type="text" placeholder="Search a TLD or keyword (e.g., .ai, finance, crypto)" inputmode="text" spellcheck="false" />
+        <button id="searchBtn" class="primary-btn" type="submit">Search</button>
+      </form>
 
-    <div class="micro-kpis">
-      <div><strong>Real 3-Year Cost</strong><span>Registration + Renewal math done for you</span></div>
-      <div><strong>Reliability Index</strong><span>Support, uptime, speed — combined</span></div>
-      <div><strong>Promo Honesty</strong><span>Teaser vs renewal clearly flagged</span></div>
+      <div class="micro-kpis">
+        <div><strong>Real 3-Year Cost</strong><span>Registration + Renewal math done for you</span></div>
+        <div><strong>Reliability Index</strong><span>Support, uptime, speed — combined</span></div>
+        <div><strong>Promo Honesty</strong><span>Teaser vs renewal clearly flagged</span></div>
+      </div>
+
+      <div id="searchResultMsg" class="search-msg"></div>
     </div>
+  </section>
 
-    <div id="searchResultMsg" class="search-msg"></div>
-  </div>
-</section>
+  <!-- SCORING + PROMPT ENGINE -->
+  <section class="container" style="padding:2rem 1rem;">
+    <h2>Mini-Engine: Domain Fair-Value Score</h2>
+    <p>Type a domain below or use the search bar above — we’ll compute a quick, explainable score (demo).</p>
 
-        <form id="searchForm" class="searchbar" onsubmit="return false;">
-          <input id="domainInput" type="text" placeholder="Search a TLD or keyword (e.g., .ai, finance, crypto)" inputmode="text" spellcheck="false" />
-          <button id="searchBtn" class="primary-btn" type="submit">Search</button>
-        </form>
+    <input id="scoreInput" type="text" placeholder="e.g., marketnews.ai" />
+    <button id="scoreBtn" class="primary-btn">Score</button>
 
-        <div class="micro-kpis">
-          <div><strong>Real 3-Year Cost</strong><span>Registration + Renewal math done for you</span></div>
-          <div><strong>Reliability Index</strong><span>Support, uptime, speed — combined</span></div>
-          <div><strong>Promo Honesty</strong><span>Teaser vs renewal clearly flagged</span></div>
-        </div>
+    <div id="scoreResult" style="margin-top:12px;font-weight:600;font-size:1.05em;"></div>
 
-    <!-- SCORING + PROMPT ENGINE -->
-    <section class="container" style="padding:2rem 1rem;">
-      <h2>Mini-Engine: Domain Fair-Value Score</h2>
-      <p>Type a domain below or use the search bar above — we’ll compute a quick, explainable score (demo).</p>
-
-      <input id="scoreInput" type="text" placeholder="e.g., marketnews.ai" />
-      <button id="scoreBtn" class="primary-btn">Score</button>
-
-      <div id="scoreResult" style="margin-top:12px;font-weight:600;font-size:1.05em;"></div>
-
-      <section class="quick-prompts" style="margin-top:2rem;">
-        <h2>Try Smart Prompts</h2>
-        <p class="muted">Click a suggestion to see how the engine thinks.</p>
-        <div class="prompt-grid">
-          <button class="glow-btn" onclick="runPrompt('Score just the brand ability of marketnews.ai')">Score Brand Ability</button>
-          <button class="glow-btn" onclick="runPrompt('Score traffic potential and CPM for forexiq.ai')">Traffic & CPM</button>
-          <button class="glow-btn" onclick="runPrompt('Estimate website build cost for fxai.ai')">Cost My Website</button>
-          <button class="glow-btn" onclick="runPrompt('Give a strong business plan for exchangeiq.ai')">Business Plan</button>
-          <button class="glow-btn" onclick="runPrompt('Recommend a domain plus website monetisation strategy')">Monetisation Strategy</button>
-          <button class="glow-btn" onclick="runPrompt('Which registrar offers best reliability and renewal rates for .ai domains?')">Registrar Advice</button>
-        </div>
-        <div id="promptResult" class="engine-result" aria-live="polite"></div>
-      </section>
+    <section class="quick-prompts" style="margin-top:2rem;">
+      <h2>Try Smart Prompts</h2>
+      <p class="muted">Click a suggestion to see how the engine thinks.</p>
+      <div class="prompt-grid">
+        <button class="glow-btn" onclick="runPrompt('Score just the brand ability of marketnews.ai')">Score Brand Ability</button>
+        <button class="glow-btn" onclick="runPrompt('Score traffic potential and CPM for forexiq.ai')">Traffic & CPM</button>
+        <button class="glow-btn" onclick="runPrompt('Estimate website build cost for fxai.ai')">Cost My Website</button>
+        <button class="glow-btn" onclick="runPrompt('Give a strong business plan for exchangeiq.ai')">Business Plan</button>
+        <button class="glow-btn" onclick="runPrompt('Recommend a domain plus website monetisation strategy')">Monetisation Strategy</button>
+        <button class="glow-btn" onclick="runPrompt('Which registrar offers best reliability and renewal rates for .ai domains?')">Registrar Advice</button>
+      </div>
+      <div id="promptResult" class="engine-result" aria-live="polite"></div>
     </section>
-<!-- SMART PROMPT OUTPUT AREA -->
-<section id="prompt-section" class="prompt-section">
-  <div class="container">
-    <h2>Ask the Engine Anything</h2>
-    <p class="muted">Type a question or click one of the smart prompts below.</p>
+  </section>
 
-    <div class="prompt-input-wrap">
-      <input id="promptInput" type="text" placeholder="e.g. How can I monetise marketnews.ai?" />
-      <button id="promptRun" class="primary-btn">Ask</button>
+  <!-- SMART PROMPT OUTPUT AREA -->
+  <section id="prompt-section" class="prompt-section">
+    <div class="container">
+      <h2>Ask the Engine Anything</h2>
+      <p class="muted">Type a question or click one of the smart prompts below.</p>
+
+      <div class="prompt-input-wrap">
+        <input id="promptInput" type="text" placeholder="e.g. How can I monetise marketnews.ai?" />
+        <button id="promptRun" class="primary-btn">Ask</button>
+      </div>
+
+      <div id="promptOutput" class="prompt-output"></div>
     </div>
+  </section>
 
-    <div id="promptOutput" class="prompt-output"></div>
-  </div>
-</section>
-
-<!-- TABLE -->
-    <!-- TABLE -->
-    <section class="table-wrap">
-      <div class="container">
-        <div class="table-head">
-          <h2>Registrar Snapshot (Demo Data)</h2>
-          <p class="muted">Placeholder demo — live API integration coming soon.</p>
-        </div>
-
-        <div class="table-scroll">
-          <table class="cd-table" aria-describedby="demoTableHelp">
-            <thead>
-              <tr>
-                <th>Registrar</th>
-                <th>1-Year</th>
-                <th>Renewal</th>
-                <th>3-Year Total</th>
-                <th>Privacy</th>
-                <th>Reliability</th>
-                <th>Promo</th>
-                <th>Last Update</th>
-              </tr>
-            </thead>
-            <tbody id="tableBody">
-              <!-- future data -->
-            </tbody>
-          </table>
-        </div>
-        <p id="demoTableHelp" class="muted small">‘3-Year Total’ = Year-1 + 2×Renewal. Reliability blends support, uptime, trust.</p>
+  <!-- TABLE -->
+  <section class="table-wrap">
+    <div class="container">
+      <div class="table-head">
+        <h2>Registrar Snapshot (Demo Data)</h2>
+        <p class="muted">Placeholder demo — live API integration coming soon.</p>
       </div>
-    </section>
 
-    <!-- DISCLAIMER -->
-    <section class="disclaimer">
-      <div class="container">
-        <div class="notice">
-          <strong>Pricing Notice:</strong> Some registrars advertise low first-year teaser rates. We always show <em>renewal</em> and <em>3-year totals</em> so you won’t get trapped by hidden long-term costs.
-        </div>
+      <div class="table-scroll">
+        <table class="cd-table" aria-describedby="demoTableHelp">
+          <thead>
+            <tr>
+              <th>Registrar</th>
+              <th>1-Year</th>
+              <th>Renewal</th>
+              <th>3-Year Total</th>
+              <th>Privacy</th>
+              <th>Reliability</th>
+              <th>Promo</th>
+              <th>Last Update</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <!-- future data -->
+          </tbody>
+        </table>
       </div>
-    </section>
-  </main>
+      <p id="demoTableHelp" class="muted small">‘3-Year Total’ = Year-1 + 2×Renewal. Reliability blends support, uptime, trust.</p>
+    </div>
+  </section>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="left">
-        <span class="muted small">© CleanDomain.ai — All rights reserved.</span>
-      </div>
-      <div class="right">
-        <span class="badge">Powered by Bestimate™ Integrity Framework</span>
+  <!-- DISCLAIMER -->
+  <section class="disclaimer">
+    <div class="container">
+      <div class="notice">
+        <strong>Pricing Notice:</strong> Some registrars advertise low first-year teaser rates. We always show <em>renewal</em> and <em>3-year totals</em> so you won’t get trapped by hidden long-term costs.
       </div>
     </div>
-  </footer>
+  </section>
+</main>
 
   <!-- SCRIPTS -->
   <script src="engine.js"></script>
