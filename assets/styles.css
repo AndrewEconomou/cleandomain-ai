@@ -353,4 +353,108 @@ body.dark-mode .glow-btn:hover {
   background: #273048 !important;
   border-color: #4ea6ff !important;
   color: #4ea6ff !important;
+
+}
+/* ==========================================================
+   CleanDomain.ai — Glass Reflection Pack v4.2
+   Adds polished reflections + depth on buttons, panels & modals
+   ========================================================== */
+
+/* --- Universal Glass Overlay Effect --- */
+.glass-reflect {
+  position: relative;
+  overflow: hidden;
+}
+.glass-reflect::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -75%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.08) 30%,
+    rgba(255, 255, 255, 0.02) 70%
+  );
+  transform: rotate(15deg);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 1.2s ease;
+  opacity: 0;
+}
+.glass-reflect:hover::before {
+  transform: rotate(15deg) translateX(30%);
+  opacity: 1;
+}
+
+/* --- Apply Reflection to Core Elements --- */
+.primary-btn,
+.cta-btn,
+.glow-btn,
+#reportForm button.primary-btn,
+.engine-result,
+.modal,
+.notice {
+  position: relative;
+  overflow: hidden;
+}
+.primary-btn::before,
+.cta-btn::before,
+.glow-btn::before,
+#reportForm button.primary-btn::before,
+.engine-result::before,
+.modal::before,
+.notice::before {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.06) 30%,
+    rgba(255, 255, 255, 0) 80%
+  );
+  opacity: 0;
+  transition: all 0.6s ease;
+}
+.primary-btn:hover::before,
+.cta-btn:hover::before,
+.glow-btn:hover::before,
+#reportForm button.primary-btn:hover::before,
+.engine-result:hover::before,
+.modal:hover::before,
+.notice:hover::before {
+  opacity: 1;
+  transform: translateY(25%);
+}
+
+/* --- Subtle Depth Shadows --- */
+.primary-btn,
+.cta-btn,
+#reportForm button.primary-btn {
+  box-shadow: 0 4px 14px rgba(0, 100, 255, 0.25);
+}
+.primary-btn:hover,
+.cta-btn:hover,
+#reportForm button.primary-btn:hover {
+  box-shadow: 0 6px 18px rgba(0, 150, 255, 0.35);
+}
+
+/* --- Dark Mode Glass Balance --- */
+body.dark-mode .primary-btn::before,
+body.dark-mode .cta-btn::before,
+body.dark-mode .glow-btn::before,
+body.dark-mode .engine-result::before,
+body.dark-mode .modal::before,
+body.dark-mode .notice::before {
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(255, 255, 255, 0.03) 40%,
+    rgba(255, 255, 255, 0) 90%
+  );
 }
