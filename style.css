@@ -120,3 +120,24 @@ button:hover {
 @media (max-width:700px){
   .prompt-input-wrap input { width:100%; }
 }
+/* === STAGE E: Typing Visuals === */
+.prompt-output.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.6s ease forwards;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.prompt-output::after {
+  content: "▌";
+  display: inline-block;
+  margin-left: 4px;
+  animation: blink 1s step-start infinite;
+  color: #0066ff;
+  font-weight: 700;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
