@@ -430,7 +430,25 @@ body.dark-mode .badge {
   background: #20232a !important;
   color: #ddd !important;
 }
+/* === SEARCH STATUS COLORS === */
+.search-msg {
+  margin-top: 1rem;
+  font-weight: 600;
+  font-size: 1.05em;
+  transition: color 0.3s ease;
+}
 
+.search-msg.searching {
+  color: #007bff; /* blue during search */
+}
+
+.search-msg.success {
+  color: #2ecc71; /* green after success */
+}
+
+.search-msg.error {
+  color: #e74c3c; /* red for empty input or failure */
+}
 /* === RESPONSIVE === */
 @media (max-width: 700px) {
   .searchbar input {
