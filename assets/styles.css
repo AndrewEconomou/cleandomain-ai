@@ -288,6 +288,75 @@ a:hover {
   padding: 0.3rem 0.7rem;
   border-radius: 4px;
 }
+/* === ENGINE RESULT === */
+.engine-result {
+  margin-top: 1.2rem;
+  padding: 1rem;
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid #e4e4e4;
+  font-size: 1rem;
+  min-height: 40px;
+  line-height: 1.4;
+}
+
+/* === TABLE === */
+.table-wrap {
+  background: #fff;
+  padding: 2rem 0;
+}
+.cd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.cd-table th,
+.cd-table td {
+  border: 1px solid #eee;
+  padding: 0.6rem;
+  text-align: left;
+}
+.cd-table th {
+  background: #f7f8fa;
+  font-weight: 600;
+}
+.cd-table tr:nth-child(even) {
+  background: #fafafa;
+}
+
+/* === DISCLAIMER === */
+.disclaimer {
+  background: #f5f7fa;
+  padding: 1.5rem 0;
+}
+.notice {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid #eee;
+  color: #444;
+}
+
+/* === FOOTER === */
+.site-footer {
+  background: #fff;
+  border-top: 1px solid #e4e4e4;
+  padding: 1rem 0;
+  margin-top: 2rem;
+}
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.badge {
+  background: #0066ff;
+  color: #fff;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+}
 
 /* === DARK MODE OVERRIDE === */
 body.dark-mode,
