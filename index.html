@@ -170,14 +170,37 @@
     localStorage.setItem("theme", isDark ? "dark" : "light");
   });
 
-  // === SEARCH BAR ===
-  document.getElementById('searchBtn').addEventListener('click', () => {
-    const input = document.getElementById('domainInput').value.trim();
-    const resultMsg = document.getElementById('searchResultMsg');
-    if (!input) {
-      resultMsg.innerHTML = "Please enter a domain or keyword.";
-      return;
-    }
+// === SEARCH BAR ===
+document.getElementById('searchBtn').addEventListener('click', () => {
+  const input = document.getElementById('domainInput').value.trim();
+  const resultMsg = document.getElementById('searchResultMsg');
+  resultMsg.className = 'search-msg'; // reset classes
+
+  if (!input) {
+    resultMsg.textContent = "Please enter a domain or keyword.";
+    resultMsg.classList.add('error');
+    return;
+  }
+
+  // Show searching message
+  resultMsg.innerHTML = `🔍 Searching for <strong>${input}</strong> ...`;
+  resultMsg.classList.add('searching');
+
+  // Simulate result
+  setTimeout(() => {
+    resultMsg.innerHTML = `✅ <strong>${input}</strong> found on 5 registrars. Compare renewal & 3-year cost below ↓`;
+    resultMsg.classList.remove('searching');
+    resultMsg.classList.add('success');
+  }, 1200);
+
+  // Auto-fill scoring engine
+  const scoreInput = document.getElementById('scoreInput');
+  const scoreButton = document.getElementById('scoreBtn');
+  if (scoreInput && scoreButton) {
+    scoreInput.value = input;
+    scoreButton.click();
+  }
+});
 
     // Demo search feedback
     resultMsg.innerHTML = `🔍 Searching for <strong>${input}</strong> ...`;
