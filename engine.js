@@ -1,158 +1,106 @@
-/* engine.js — CleanDomain.ai Scoring Engine v1.3
-   - Transparent weighted scoring (same v1.2 behaviour/voice)
-   - TLD-aware insight paragraphs
-   - HTML-safe typing animation
-   - Robust init (binds even if DOMContentLoaded already fired)
-*/
+/* =======================================================
+   CleanDomain.ai — Engine v2 (Stage 1 + 2)
+   Deterministic, transparent domain-evaluation logic
+   ======================================================= */
 
-(function () {
-  // === Metric definitions (kept from v1.2) ===
+(function(){
   const METRICS = [
-    { key: 'brandability',   label: 'Brandability',        weight: 20 },
-    { key: 'keywordValue',   label: 'Keyword Value',       weight: 18 },
-    { key: 'length',         label: 'Length',              weight: 12 },
-    { key: 'tldQuality',     label: 'Extension Quality',   weight: 20 },
-    { key: 'marketPotential',label: 'Market Potential',    weight: 15 },
-    { key: 'futureProof',    label: 'Future Potential',    weight: 15 },
+    { key:"extension_trust",label:"Extension Trust",weight:10 },
+    { key:"brandability",label:"Brandability",weight:10 },
+    { key:"length_efficiency",label:"Length Efficiency",weight:5 },
+    { key:"keyword_value",label:"Keyword Value",weight:8 },
+    { key:"vertical_demand",label:"Vertical Demand",weight:10 },
+    { key:"liquidity",label:"Resale Liquidity",weight:6 },
+    { key:"readability",label:"Readability",weight:5 },
+    { key:"repetition_integrity",label:"Repetition Integrity",weight:5 },
+    { key:"ethical_authenticity",label:"Ethical Authenticity",weight:4 },
+    { key:"trend_momentum",label:"Trend Momentum",weight:8 },
+    { key:"build_viability",label:"Build Viability",weight:7 },
+    { key:"growth_potential",label:"Growth Potential",weight:6 },
+    { key:"seo_authority",label:"SEO Authority",weight:6 },
+    { key:"technical_cleanliness",label:"Technical Cleanliness",weight:4 },
+    { key:"overall_resilience",label:"Overall Resilience",weight:10 },
   ];
 
-  // ---- Utilities ----
-  function $(id) { return document.getElementById(id); }
+  /* ---------- Helpers ---------- */
+  const $ = id => document.getElementById(id);
+  const avg = a => a.reduce((x,y)=>x+y,0)/a.length;
+  const rnd = (n,d=1)=>Math.round(n*10**d)/10**d;
+  const fmt = k=>k.replace(/_/g," ").replace(/\b\w/g,c=>c.toUpperCase());
 
-  // === Proper HTML typing animation ===
-  function typeOutHTML(element, html, speed) {
-    element.innerHTML = "";
-    let i = 0;
-    const interval = setInterval(() => {
-      element.innerHTML = html.slice(0, i);
-      i++;
-      if (i >= html.length) {
-        element.innerHTML = html; // ensure final render parses HTML
-        clearInterval(interval);
-      }
-    }, speed);
+  /* ---------- Core scoring ---------- */
+  function scoreDomain(domain){
+    domain = domain.toLowerCase().trim();
+    const tld = domain.split('.').pop()||"";
+    const name = domain.replace(/\.[^.]+$/,"");
+    const len = name.length;
+    const vowels = (name.match(/[aeiou]/g)||[]).length;
+    const vowelRatio = vowels/Math.max(len,1);
+    const hasHyphen = domain.includes("-");
+    const hasNum = /\d/.test(domain);
+
+    const s={};
+    s.extension_trust = tld==="ai"?9.5:tld==="io"?8.5:tld==="com"?8:7;
+    s.brandability = (vowelRatio>=0.35&&len<=10)?9:(vowelRatio>=0.25&&len<=14)?8:6.5;
+    s.length_efficiency = len<=6?10:len<=10?9:len<=14?7:5;
+    s.keyword_value = /ai|crypto|finance|trade|tech/.test(name)?9:/blog|news|site|hub/.test(name)?8:6;
+    s.vertical_demand = /finance|money|invest|trade/.test(name)?9:/crypto|ai|tech/.test(name)?8.5:7;
+    s.liquidity = (!hasHyphen&&!hasNum&&len<10)?8.5:6.5;
+    s.readability = (!hasHyphen&&!hasNum&&vowelRatio>=0.25)?9:7;
+    s.repetition_integrity = (name.match(/ai/g)||[]).length>1?6:9;
+    s.ethical_authenticity = /(google|meta|amazon|apple|microsoft)/.test(name)?2:9.5;
+    s.trend_momentum = /ai|crypto|chat|bot/.test(name)?9:/eco|green|finance/.test(name)?8:6.5;
+    s.build_viability = /store|shop|blog|hub|app|site|platform/.test(name)?9:8;
+    s.growth_potential = /ai|crypto|finance|invest|tech/.test(name)?9:7;
+    s.seo_authority = name.split(/[^a-z0-9]+/).length<=2?9:7;
+    s.technical_cleanliness = (!hasHyphen&&!hasNum&&/^[a-z0-9]+$/.test(name))?9.5:7;
+    s.overall_resilience = Math.min(10,avg(Object.values(s))*0.95);
+
+    const total = METRICS.reduce((a,m)=>a+s[m.key]*(m.weight/100),0);
+    const final = rnd(total,1);
+
+    return {domain,tld,len,score:final,subs:s};
   }
 
-  // === Fake insights based on domain (same as v1.2) ===
-  function generateInsights(domain) {
-    const tld = (domain.split('.').pop() || "").toLowerCase();
-    if (tld === 'ai') {
-      return ".ai domains are currently premium assets — high CPM potential, strong branding, and industry momentum.";
-    } else if (tld === 'com') {
-      return "Classic .com — broad recognition but less distinctive in modern AI sectors.";
-    } else if (tld === 'io') {
-      return ".io remains popular in tech and startups — solid perception with moderate renewal costs.";
-    } else if (tld) {
-      return `.${tld} is fine for regional or niche use, but .ai, .com, or .io are usually stronger choices for global brands.`;
-    } else {
-      return "Choose a meaningful extension — .ai, .com, or .io are usually strongest for global tech brands.";
-    }
-  }
+  /* ---------- Renderer ---------- */
+  function renderResult(result){
+    const box = $("scoreResult");
+    if(!box) return;
+    const {domain,score,subs} = result;
 
-  // === Table generator (same v1.2 look; tolerant of separate #scoreTable) ===
-  function generateMetricsTable() {
-    let rows = "";
-    METRICS.forEach(m => {
-      const metricScore = (Math.random() * 10 + 11).toFixed(2); // 11–21 (simulated weighting /22)
-      rows += `<tr><td>${m.label}</td><td style="text-align:right">${metricScore}/22</td></tr>`;
-    });
-    return `
-      <table style="width:100%;max-width:480px;border-collapse:collapse;margin-top:8px;">
-        <thead>
-          <tr>
-            <th style="text-align:left;">Metric</th>
-            <th style="text-align:right;">Score</th>
-          </tr>
-        </thead>
-        <tbody>${rows}</tbody>
+    const verdict = score>=9?"Excellent":score>=7.5?"Strong":score>=6?"Fair":"Developing";
+    const top3 = Object.entries(subs).sort((a,b)=>b[1]-a[1]).slice(0,3);
+    const low2 = Object.entries(subs).sort((a,b)=>a[1]-b[1]).slice(0,2);
+
+    let html = `
+      <h3>Score: ${score}/10 — ${verdict}</h3>
+      <p><strong>${domain}</strong> shows balanced strengths across ${top3.map(x=>fmt(x[0])).join(", ")}.</p>
+      <table class="cd-table" style="margin-top:1rem;">
+        <thead><tr><th>Metric</th><th>Score</th><th>Weight %</th></tr></thead>
+        <tbody>
+          ${METRICS.map(m=>{
+            const v=subs[m.key]||0;
+            return `<tr><td>${m.label}</td><td>${v.toFixed(1)}</td><td>${m.weight}</td></tr>`;
+          }).join("")}
+        </tbody>
       </table>
+      <p style="margin-top:1rem;"><strong>Strengths:</strong> ${top3.map(([k,v])=>fmt(k)+" ("+v+")").join(", ")}<br>
+      <strong>Weaknesses:</strong> ${low2.map(([k,v])=>fmt(k)+" ("+v+")").join(", ")}.</p>
     `;
+    box.innerHTML = html;
   }
 
-  // === Generate and render score (kept behaviour; slightly clearer HTML) ===
-  function renderScore(domain, scoreResultEl, scoreTableEl) {
-    scoreResultEl.innerHTML = "⏳ Analysing " + domain + "...";
-    setTimeout(() => {
-      const totalScore = (Math.random() * 22 + 78).toFixed(2); // 78–100
-      const insights = generateInsights(domain);
-      const tableHTML = generateMetricsTable();
-
-      const summaryHTML = `
-        <strong>${domain}</strong><br>
-        <br><strong>Final Score:</strong> ${totalScore}/100
-        <br><br><em>${insights}</em>
-      `;
-
-      // If a dedicated #scoreTable exists, split content; else put all in scoreResult
-      if (scoreTableEl) {
-        typeOutHTML(scoreResultEl, summaryHTML, 12);
-        scoreTableEl.innerHTML = tableHTML;
-      } else {
-        const combined = `${summaryHTML}<br><br>${tableHTML}`;
-        typeOutHTML(scoreResultEl, combined, 12);
-      }
-    }, 800);
-  }
-
-  // === Prompt replies (unchanged) ===
-  function generatePromptReply(prompt) {
-    prompt = (prompt || "").toLowerCase();
-    if (prompt.includes("brand")) {
-      return "<strong>Brand Analysis:</strong><br>Excellent brand potential. Concise, memorable, and aligns with modern AI identity.";
-    } else if (prompt.includes("traffic")) {
-      return "<strong>Traffic + CPM:</strong><br>High search volume and advertising value. Strong monetisation path if developed.";
-    } else if (prompt.includes("cost")) {
-      return "<strong>Website Build Cost:</strong><br>DIY (AI-assisted): £100–£250<br>Professional Agency: £3,000–£10,000.";
-    } else if (prompt.includes("business")) {
-      return "<strong>Business Plan:</strong><br>Focus on niche authority content. Use AI-assisted automation for rapid scalability.";
-    } else if (prompt.includes("monetisation")) {
-      return "<strong>Monetisation Strategy:</strong><br>Combine ads, affiliate tools, and subscription AI utilities.";
-    } else if (prompt.includes("registrar")) {
-      return "<strong>Registrar Recommendation:</strong><br>Use Cloudflare or Namecheap for transparency and fair renewals.";
-    } else {
-      return "<strong>Insight:</strong><br>Balanced domain choice. Evaluate SEO intent, brand resonance, and future potential.";
-    }
-  }
-
-  // Expose for buttons
-  window.runPrompt = function (query) {
-    const resultBox = $("promptResult");
-    if (!resultBox) return;
-    resultBox.innerHTML = `<span style="color:#999;">Analysing prompt...</span>`;
-    setTimeout(() => {
-      const reply = generatePromptReply(query);
-      typeOutHTML(resultBox, reply, 15);
-    }, 900);
-  };
-
-  // === Initialization (robust) ===
-  function bindHandlers() {
-    const input = $("scoreInput");
-    const button = $("scoreBtn");
-    const scoreResult = $("scoreResult");
-    const scoreTable = $("scoreTable"); // optional
-
-    if (!input || !button || !scoreResult) return;
-
-    // avoid double-binding
-    if (button.dataset.bound === "1") return;
-    button.dataset.bound = "1";
-
-    button.addEventListener("click", () => {
-      const domain = (input.value || "").trim();
-      if (!domain) {
-        scoreResult.innerHTML = "<em>Please enter a domain name first.</em>";
-        if (scoreTable) scoreTable.innerHTML = "";
-        return;
-      }
-      renderScore(domain, scoreResult, scoreTable);
+  /* ---------- Bind ---------- */
+  function init(){
+    const btn=$("scoreBtn");
+    if(!btn||btn.dataset.bound)return;
+    btn.dataset.bound="1";
+    btn.addEventListener("click",()=>{
+      const val=$("scoreInput").value.trim();
+      if(!val){$("scoreResult").innerHTML="<em>Enter a domain first.</em>";return;}
+      const result=scoreDomain(val);
+      renderResult(result);
     });
   }
-
-  // Bind now or when DOM is ready (works in both cases)
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", bindHandlers, { once: true });
-  } else {
-    bindHandlers();
-  }
+  document.readyState==="loading"?document.addEventListener("DOMContentLoaded",init):init();
 })();
