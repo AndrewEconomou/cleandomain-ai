@@ -458,3 +458,125 @@ body.dark-mode .notice::before {
     rgba(255, 255, 255, 0) 90%
   );
 }
+/* ==========================================================
+   CleanDomain.ai — Motion Feel Pack v4.3
+   Adds subtle motion physics & micro-interactions for realism
+   ========================================================== */
+
+/* --- Smooth Scroll Behavior --- */
+html {
+  scroll-behavior: smooth;
+}
+
+/* --- Global Transition Defaults --- */
+* {
+  transition: background 0.3s ease, color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* --- Button Lift Effect --- */
+.primary-btn,
+.cta-btn,
+.glow-btn,
+#reportForm button.primary-btn {
+  transform: translateY(0);
+}
+.primary-btn:hover,
+.cta-btn:hover,
+.glow-btn:hover,
+#reportForm button.primary-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* --- Card Hover Depth --- */
+.engine-result,
+.action-panel,
+.notice,
+.history-panel {
+  transform: translateY(0);
+}
+.engine-result:hover,
+.action-panel:hover,
+.notice:hover,
+.history-panel:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+body.dark-mode .engine-result:hover,
+body.dark-mode .action-panel:hover,
+body.dark-mode .notice:hover,
+body.dark-mode .history-panel:hover {
+  box-shadow: 0 8px 20px rgba(0, 150, 255, 0.1);
+}
+
+/* --- Table Row Motion --- */
+.cd-table tr {
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+.cd-table tr:hover {
+  background: rgba(0, 102, 255, 0.05);
+  transform: scale(1.002);
+}
+body.dark-mode .cd-table tr:hover {
+  background: rgba(0, 150, 255, 0.06);
+}
+
+/* --- Section Fade-Up Animation on Entry --- */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+section {
+  animation: fadeUp 0.6s ease both;
+  animation-delay: 0.05s;
+}
+
+/* --- Header + Footer Motion --- */
+.site-header {
+  transition: all 0.4s ease;
+}
+.site-header:hover {
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+}
+body.dark-mode .site-header:hover {
+  box-shadow: 0 2px 15px rgba(0, 150, 255, 0.15);
+}
+
+.site-footer {
+  transition: all 0.4s ease;
+}
+.site-footer:hover {
+  background: rgba(0, 102, 255, 0.03);
+}
+body.dark-mode .site-footer:hover {
+  background: rgba(0, 150, 255, 0.04);
+}
+
+/* --- Micro-KPI Hover Glow --- */
+.micro-kpis div {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.micro-kpis div:hover {
+  color: #0066ff;
+  transform: scale(1.03);
+}
+body.dark-mode .micro-kpis div:hover {
+  color: #4ea6ff;
+}
+
+/* --- Prompt Buttons Pop --- */
+.glow-btn {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.glow-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 14px rgba(0, 102, 255, 0.2);
+}
+body.dark-mode .glow-btn:hover {
+  box-shadow: 0 6px 14px rgba(79, 195, 247, 0.2);
+}
