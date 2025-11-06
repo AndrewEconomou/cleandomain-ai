@@ -356,7 +356,30 @@ a:hover {
   padding: 0.3rem 0.7rem;
   border-radius: 4px;
 }
+/* === HERO SPACING & ALIGNMENT FIX (v2.0) === */
+.hero {
+  background: #ffffff;
+  padding: 1.8rem 0 1.3rem; /* slightly lifted overall */
+  text-align: center;
+  border-bottom: 1px solid #f0f0f0;
+}
 
+.hero .container {
+  position: relative;
+  top: -0.4rem; /* visually raises hero content */
+}
+
+.hero-title {
+  margin-top: 0.4rem;
+  line-height: 1.25;
+}
+
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 1.9rem;
+    line-height: 1.3;
+  }
+}
 /* === DARK MODE OVERRIDE === */
 body.dark-mode,
 body.dark-mode main,
