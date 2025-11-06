@@ -181,3 +181,50 @@
   };
 
 })();
+/* =======================================================
+   CleanDomain.ai — Stage D Smart Prompt Typing Module
+   ======================================================= */
+(function(){
+  const promptBtn = document.getElementById("promptRun");
+  const promptInput = document.getElementById("promptInput");
+  const promptOutput = document.getElementById("promptOutput");
+
+  if(!promptBtn || !promptInput || !promptOutput) return;
+
+  const replies = {
+    brand: "Brandability relates to how easily a name sticks in memory and sound. MarketNews.ai performs superbly here — short, clean, and authoritative.",
+    traffic: "Traffic & CPM potential depend on vertical demand. Finance-AI names often yield CPM rates 25–60 % above general tech averages.",
+    cost: "A fully custom build may cost $8 000+, while AI-assisted DIY routes can achieve a professional result for £200 – £300.",
+    business: "This domain aligns well for a data-driven media or analytics venture. Combine automation and topical newsfeeds for strong retention.",
+    sell: "List on Sedo, Afternic, and SquadHelp. Price 10–20 % below top comparables for a faster close and feature concise, value-based copy."
+  };
+
+  function typeEffect(el, text, speed=18){
+    el.innerHTML = "";
+    let i = 0;
+    const interval = setInterval(()=>{
+      el.innerHTML = text.slice(0, i);
+      i++;
+      if(i > text.length){
+        clearInterval(interval);
+        el.innerHTML = text; // ensure full render
+      }
+    }, speed);
+  }
+
+  promptBtn.addEventListener("click", ()=>{
+    const val = promptInput.value.toLowerCase().trim();
+    if(!val){promptOutput.innerHTML="<em>Please enter a question.</em>"; return;}
+
+    promptOutput.innerHTML = "⏳ Thinking...";
+    setTimeout(()=>{
+      let reply = replies.brand; // default
+      if(val.includes("traffic")||val.includes("cpm")) reply = replies.traffic;
+      else if(val.includes("cost")||val.includes("build")) reply = replies.cost;
+      else if(val.includes("business")||val.includes("plan")) reply = replies.business;
+      else if(val.includes("sell")||val.includes("sale")) reply = replies.sell;
+
+      typeEffect(promptOutput, reply);
+    },700);
+  });
+})();
