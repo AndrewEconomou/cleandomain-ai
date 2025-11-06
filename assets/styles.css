@@ -295,3 +295,62 @@ button.flash {
   50% { box-shadow: 0 0 16px rgba(0,150,255,0.7); }
   100% { box-shadow: 0 0 0 rgba(0,150,255,0); }
 }
+/* ==========================================================
+   CleanDomain.ai — Dark Mode Visual Fix Patch v4.1
+   Fixes white modal boxes + button text contrast
+   ========================================================== */
+
+/* --- Modal Fix --- */
+body.dark-mode .modal,
+body.dark-mode .modal-content {
+  background: rgba(20, 22, 28, 0.92) !important;
+  color: #f1f4ff !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* --- Form Input Fix --- */
+body.dark-mode .modal input,
+body.dark-mode .report-form input {
+  background: #1c1f28 !important;
+  color: #e5e9f2 !important;
+  border: 1px solid #333 !important;
+}
+
+/* --- CTA Buttons Fix --- */
+body.dark-mode .cta-btn,
+body.dark-mode #reportForm button.primary-btn,
+body.dark-mode .primary-btn {
+  background: linear-gradient(90deg, #007aff, #3ac8ff) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 0 10px rgba(0, 100, 255, 0.25) !important;
+}
+
+body.dark-mode .cta-btn:hover,
+body.dark-mode .primary-btn:hover {
+  background: linear-gradient(90deg, #0094ff, #00d4ff) !important;
+  box-shadow: 0 0 16px rgba(0, 150, 255, 0.4) !important;
+}
+
+/* --- Engine Result Boxes Fix --- */
+body.dark-mode .engine-result,
+body.dark-mode .notice,
+body.dark-mode .action-panel {
+  background: #15171d !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: #e5e9f2 !important;
+}
+
+/* --- Prompt Grid Buttons --- */
+body.dark-mode .glow-btn {
+  background: #1b1e26 !important;
+  color: #f0f4ff !important;
+  border: 1px solid #2c3240 !important;
+}
+
+body.dark-mode .glow-btn:hover {
+  background: #273048 !important;
+  border-color: #4ea6ff !important;
+  color: #4ea6ff !important;
+}
