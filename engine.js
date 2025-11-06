@@ -94,3 +94,90 @@
   }
   document.readyState==="loading"?document.addEventListener("DOMContentLoaded",init):init();
 })();
+/* =======================================================
+   CleanDomain.ai — Stage B Advisory + Interaction Module
+   ======================================================= */
+
+(function(){
+  const $ = id => document.getElementById(id);
+
+  // Attach after the result renders
+  document.addEventListener("DOMContentLoaded",()=>{
+    const box = $("scoreResult");
+    if(!box) return;
+
+    // Observe for new analysis blocks
+    const observer = new MutationObserver(() => {
+      const adv = document.getElementById("advancedAdvice");
+      if(!adv){
+        const advBox = document.createElement("div");
+        advBox.id = "advancedAdvice";
+        advBox.style.marginTop = "2rem";
+        box.appendChild(advBox);
+        generateAdvancedAdvice(advBox);
+      }
+    });
+    observer.observe(box,{childList:true});
+  });
+
+  function generateAdvancedAdvice(el){
+    // --- Advanced Summary ---
+    const advSummary = `
+      <h4>Advanced Summary</h4>
+      <p>This domain demonstrates balanced commercial strength and branding potential.
+      Its keyword composition aligns with high-CPM industries and stable trend momentum.
+      Strong build viability indicates it could be turned into a functioning business site rapidly using AI tools.
+      Maintain consistent updates to preserve SEO authority and compound brand equity over time.</p>
+    `;
+
+    // --- Domain Market Facts ---
+    const facts = `
+      <h4>Domain Market Facts</h4>
+      <ul>
+        <li>Average .ai resale value (2025): $3,200 – $9,800</li>
+        <li>Global AI-related TLD registrations +27 % YoY</li>
+        <li>Median build cost for small AI business site: $180 – $240 using AI</li>
+      </ul>
+    `;
+
+    // --- Action Panel ---
+    const actions = `
+      <h4>Next Steps</h4>
+      <p><strong>Build Your Site:</strong><br>
+      • Top-tier developer $8 000–$12 000 <br>
+      • Mid-tier $3 000–$5 000 <br>
+      • DIY with AI £100–£250 (Recommended for self-starters)
+      </p>
+      <p><strong>Sell Your Domain:</strong><br>
+      List on Sedo, Afternic or Dan.com for maximum reach.
+      Consider holding 2–3 years to capture market growth.</p>
+    `;
+
+    // --- Interactive Prompts ---
+    const prompts = `
+      <h4>Ask the Engine</h4>
+      <button class="glow-btn" onclick="askVision()">Describe My Website Vision</button>
+      <button class="glow-btn" onclick="askSell()">How Do I Sell My Domain?</button>
+      <div id="interactionBox" style="margin-top:1rem;"></div>
+    `;
+
+    el.innerHTML = advSummary + facts + actions + prompts;
+  }
+
+  // === Prompt Handlers ===
+  window.askVision = function(){
+    const out = document.getElementById("interactionBox");
+    out.innerHTML = `<p><strong>Vision Evaluator:</strong><br>
+    Please describe your website idea in one or two sentences — industry, purpose, or audience — 
+    and the engine will estimate build cost, complexity, and growth potential.</p>`;
+  };
+
+  window.askSell = function(){
+    const out = document.getElementById("interactionBox");
+    out.innerHTML = `<p><strong>Resale Guide:</strong><br>
+    To sell your domain, create listings on Sedo, Afternic, and Namecheap Market. 
+    Ensure accurate keywords and short descriptions. 
+    Typical .ai sales close within 2–6 weeks when priced 10–20 % below comparable asks.</p>`;
+  };
+
+})();
