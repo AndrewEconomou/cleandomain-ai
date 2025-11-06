@@ -323,3 +323,11 @@ body.dark-mode.glow-mode .action-panel,
 body.dark-mode.glow-mode .notice{
   box-shadow:0 10px 28px rgba(0,180,255,.12);
 }
+/* --- Revenue Calculator --- */
+.calc-wrap { background: var(--surface); padding: 2rem 0; }
+.calc-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: .8rem; margin: 1rem 0 1.2rem; }
+.calc-field label { display:block; font-weight:700; margin-bottom:.35rem; }
+.calc-field input { width:100%; padding:.65rem; border:1px solid #ccc; border-radius:8px; background:#fff; color:#111; }
+@media (max-width:900px){ .calc-grid{ grid-template-columns: 1fr 1fr; } }
+@media (max-width:560px){ .calc-grid{ grid-template-columns: 1fr; } }
+body.dark-mode .calc-field input { background:#181b22; color:#fff; border:1px solid #333; }
