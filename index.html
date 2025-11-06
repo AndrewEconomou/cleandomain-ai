@@ -56,7 +56,20 @@
     <button id="scoreBtn" class="primary-btn">Score</button>
 
     <div id="scoreResult" style="margin-top:12px;font-weight:600;font-size:1.05em;"></div>
+<!-- === COMPARISON MEMORY === -->
+<div id="historyPanel" class="history-panel">
+  <h3>Recent Domain Scores</h3>
+  <ul id="historyList"></ul>
+</div>
 
+<!-- === AI VIEW MODE SWITCH === -->
+<div class="tone-switch">
+  <label for="viewMode">View Mode:</label>
+  <select id="viewMode">
+    <option value="investor">Investor View</option>
+    <option value="builder">Builder View</option>
+  </select>
+</div>
     <section class="quick-prompts" style="margin-top:2rem;">
       <h2>Try Smart Prompts</h2>
       <p class="muted">Click a suggestion to see how the engine thinks.</p>
