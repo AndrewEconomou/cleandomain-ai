@@ -131,14 +131,21 @@
   <!-- SCRIPTS -->
   <script src="engine.js"></script>
 
+    <!-- SCRIPTS -->
+  <script src="engine.js"></script>
+
   <script>
   // === THEME TOGGLE ===
   const toggleButton = document.getElementById("themeToggle");
   const currentTheme = localStorage.getItem("theme");
+
+  // Apply saved theme
   if (currentTheme === "dark") {
     document.body.classList.add("dark-mode");
     toggleButton.textContent = "Light";
   }
+
+  // Handle toggle click
   toggleButton.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
     const isDark = document.body.classList.contains("dark-mode");
@@ -146,42 +153,27 @@
     localStorage.setItem("theme", isDark ? "dark" : "light");
   });
 
-// === SEARCH BAR ===
-document.getElementById('searchBtn').addEventListener('click', () => {
-  const input = document.getElementById('domainInput').value.trim();
-  const resultMsg = document.getElementById('searchResultMsg');
-  resultMsg.className = 'search-msg'; // reset classes
+  // === SEARCH BAR ===
+  document.getElementById('searchBtn').addEventListener('click', () => {
+    const input = document.getElementById('domainInput').value.trim();
+    const resultMsg = document.getElementById('searchResultMsg');
+    resultMsg.className = 'search-msg'; // reset style classes
 
-  if (!input) {
-    resultMsg.textContent = "Please enter a domain or keyword.";
-    resultMsg.classList.add('error');
-    return;
-  }
+    if (!input) {
+      resultMsg.textContent = "Please enter a domain or keyword.";
+      resultMsg.classList.add('error');
+      return;
+    }
 
-  // Show searching message
-  resultMsg.innerHTML = `🔍 Searching for <strong>${input}</strong> ...`;
-  resultMsg.classList.add('searching');
-
-  // Simulate result
-  setTimeout(() => {
-    resultMsg.innerHTML = `✅ <strong>${input}</strong> found on 5 registrars. Compare renewal & 3-year cost below ↓`;
-    resultMsg.classList.remove('searching');
-    resultMsg.classList.add('success');
-  }, 1200);
-
-  // Auto-fill scoring engine
-  const scoreInput = document.getElementById('scoreInput');
-  const scoreButton = document.getElementById('scoreBtn');
-  if (scoreInput && scoreButton) {
-    scoreInput.value = input;
-    scoreButton.click();
-  }
-});
-
-    // Demo search feedback
+    // Searching animation
     resultMsg.innerHTML = `🔍 Searching for <strong>${input}</strong> ...`;
+    resultMsg.classList.add('searching');
+
+    // Simulated success result
     setTimeout(() => {
       resultMsg.innerHTML = `✅ <strong>${input}</strong> found on 5 registrars. Compare renewal & 3-year cost below ↓`;
+      resultMsg.classList.remove('searching');
+      resultMsg.classList.add('success');
     }, 1200);
 
     // Pass searched domain into scoring engine input and auto-run
@@ -189,7 +181,6 @@ document.getElementById('searchBtn').addEventListener('click', () => {
     const scoreButton = document.getElementById('scoreBtn');
     if (scoreInput && scoreButton) {
       scoreInput.value = input;
-      // trigger scoring automatically
       scoreButton.click();
     }
   });
