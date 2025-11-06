@@ -306,5 +306,18 @@
     if (e.target === reportModal) closeModal.click();
   });
   </script>
+  <script>
+// === ENGINE BUTTON STATE HANDLER ===
+function engineButtonState(btn, loading = true) {
+  if (!btn) return;
+  if (loading) {
+    btn.classList.add("loading");
+  } else {
+    btn.classList.remove("loading");
+    btn.classList.add("flash");
+    setTimeout(() => btn.classList.remove("flash"), 900);
+  }
+}
+</script>
 </body>
 </html>
