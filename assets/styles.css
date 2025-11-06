@@ -580,3 +580,83 @@ body.dark-mode .micro-kpis div:hover {
 body.dark-mode .glow-btn:hover {
   box-shadow: 0 6px 14px rgba(79, 195, 247, 0.2);
 }
+/* ==========================================================
+   CleanDomain.ai — Adaptive Depth Pack v4.4
+   Scroll-reactive depth, dynamic shadows & adaptive contrast
+   ========================================================== */
+
+/* --- Scroll Elevation for Header --- */
+.site-header {
+  transition: background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+}
+.site-header.scrolled {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+body.dark-mode .site-header.scrolled {
+  background: rgba(10, 12, 18, 0.88);
+  box-shadow: 0 4px 14px rgba(0, 150, 255, 0.1);
+}
+
+/* --- Layered Section Depth --- */
+section {
+  position: relative;
+  z-index: 1;
+}
+section::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0,0,0,0.06), rgba(0,0,0,0));
+  opacity: 0.4;
+  transition: opacity 0.5s ease;
+}
+body.dark-mode section::after {
+  background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0));
+}
+
+/* --- Element Depth Layers --- */
+[data-depth="1"] { box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+[data-depth="2"] { box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+[data-depth="3"] { box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
+[data-depth="4"] { box-shadow: 0 10px 25px rgba(0,0,0,0.16); }
+body.dark-mode [data-depth="1"] { box-shadow: 0 1px 3px rgba(0,150,255,0.06); }
+body.dark-mode [data-depth="2"] { box-shadow: 0 4px 10px rgba(0,150,255,0.08); }
+body.dark-mode [data-depth="3"] { box-shadow: 0 6px 18px rgba(0,150,255,0.12); }
+body.dark-mode [data-depth="4"] { box-shadow: 0 10px 25px rgba(0,150,255,0.16); }
+
+/* --- Floating Highlight Glow --- */
+.glow-layer {
+  position: relative;
+  z-index: 2;
+  transition: filter 0.4s ease;
+}
+.glow-layer:hover {
+  filter: brightness(1.06) saturate(1.1);
+}
+
+/* --- Adaptive Contrast for Deep Elements --- */
+body.dark-mode .engine-result,
+body.dark-mode .action-panel,
+body.dark-mode .notice,
+body.dark-mode .modal {
+  background: linear-gradient(180deg, #13161b 0%, #0f1114 100%);
+  border-color: rgba(255,255,255,0.05);
+}
+body.dark-mode .hero,
+body.dark-mode main {
+  background: radial-gradient(circle at top left, #0b0c10, #0a0a0e 70%);
+}
+
+/* --- Subtle Perspective on Scroll --- */
+@keyframes scrollParallax {
+  from { transform: translateY(0px); }
+  to { transform: translateY(10px); }
+}
+section:hover {
+  animation: scrollParallax 1.5s ease-in-out infinite alternate;
+}
