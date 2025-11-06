@@ -339,5 +339,35 @@
     else header.classList.remove("scrolled");
   });
 </script>
+  <script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const fmt = n => n.toLocaleString(undefined,{maximumFractionDigits:2});
+
+  const run = () => {
+    const v = parseFloat($('calcVisitors').value || '0');
+    const cpm = parseFloat($('calcCPM').value || '0');
+    const units = parseFloat($('calcAdsPerVisit').value || '1');
+    const impressions = v * units;
+    const revenuePerImpression = cpm / 1000;
+    const day = impressions * revenuePerImpression;
+    const month = day * 30;
+    const year = day * 365;
+
+    $('calcResult').innerHTML = `
+      <div><strong>Daily:</strong> $${fmt(day)}</div>
+      <div><strong>Monthly (30d):</strong> $${fmt(month)}</div>
+      <div><strong>Yearly (365d):</strong> $${fmt(year)}</div>
+      <div class="muted small" style="margin-top:.4rem;">Assumes ${fmt(units)} ad unit(s) per visit.</div>
+    `;
+    const btn = $('calcRun');
+    btn.classList.add('flash');
+    setTimeout(()=>btn.classList.remove('flash'), 900);
+  };
+
+  const btn = document.getElementById('calcRun');
+  if (btn) btn.addEventListener('click', run);
+})();
+</script>
 </body>
 </html>
