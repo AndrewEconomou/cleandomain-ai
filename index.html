@@ -130,7 +130,35 @@
     <div id="calcResult" class="engine-result" aria-live="polite"></div>
   </div>
 </section>
+<section class="chart-wrap">
+  <div class="container">
+    <h2>Market Chart (MT4-Style)</h2>
+    <div class="chart-controls">
+      <div>
+        <label for="symInput">Symbol</label>
+        <input id="symInput" type="text" placeholder="e.g. EURUSD" value="EURUSD">
+      </div>
+      <div>
+        <label for="tfSelect">Timeframe</label>
+        <select id="tfSelect">
+          <option value="D">Daily</option>
+          <option value="H4">H4</option>
+          <option value="H1">H1</option>
+          <option value="M15">M15</option>
+        </select>
+      </div>
+      <div class="indicators">
+        <label><input type="checkbox" id="indSMA" checked> SMA(20)</label>
+        <label><input type="checkbox" id="indEMA"> EMA(50)</label>
+        <label><input type="checkbox" id="indRSI" checked> RSI(14)</label>
+      </div>
+      <button id="chartLoad" class="primary-btn glass-reflect">Load</button>
+    </div>
 
+    <div id="chartArea" class="chart-area" data-depth="3"></div>
+    <div id="rsiArea" class="rsi-area" data-depth="2"></div>
+  </div>
+</section>
     <!-- ============================================================= -->
     <!-- REGISTRAR TABLE -->
     <!-- ============================================================= -->
