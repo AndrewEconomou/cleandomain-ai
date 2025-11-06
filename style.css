@@ -117,6 +117,10 @@ button:hover {
   margin: 0 auto;
   text-align: left;
 }
+/* === FIX: Dark-mode header ".ai" color === */
+body.dark-mode .brand-name .ai {
+  color: #4da3ff !important;   /* light-blue accent that pops on dark background */
+}
 @media (max-width:700px){
   .prompt-input-wrap input { width:100%; }
 }
