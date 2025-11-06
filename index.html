@@ -290,5 +290,38 @@ document.getElementById("sellBtn").addEventListener("click", () => {
     </div>
   </div>
 </div>>
+  <script>
+// === MODAL LOGIC ===
+const reportBtn = document.getElementById("reportBtn");
+const reportModal = document.getElementById("reportModal");
+const closeModal = document.getElementById("closeModal");
+const reportForm = document.getElementById("reportForm");
+const reportSuccess = document.getElementById("reportSuccess");
+const reportDomain = document.getElementById("reportDomain");
+
+reportBtn.addEventListener("click", () => {
+  const scoreInput = document.getElementById("scoreInput").value.trim();
+  if (scoreInput) reportDomain.value = scoreInput;
+  reportModal.style.display = "flex";
+});
+
+closeModal.addEventListener("click", () => {
+  reportModal.style.display = "none";
+  reportForm.style.display = "block";
+  reportSuccess.style.display = "none";
+});
+
+reportForm.addEventListener("submit", e => {
+  e.preventDefault();
+  reportForm.style.display = "none";
+  reportSuccess.style.display = "block";
+  setTimeout(() => (reportModal.style.display = "none"), 2200);
+});
+
+// Close on background click
+reportModal.addEventListener("click", e => {
+  if (e.target === reportModal) closeModal.click();
+});
+</script>
 </body<
 </html>
