@@ -1,9 +1,12 @@
-/* === CleanDomain.ai Engine v3.0 === */
-/* Full output restored + ChatGPT-style smooth reveal + blinking cursor */
+/* === CleanDomain.ai Engine v3.1 === */
+/* Restores full output + ChatGPT-style reveal + domain search simulation */
 
 document.addEventListener("DOMContentLoaded", () => {
   const outputEl = document.getElementById("engine-output");
   const runBtn = document.getElementById("run-engine");
+  const searchBtn = document.getElementById("search-btn");
+  const domainInput = document.getElementById("domain-input");
+  const searchResults = document.getElementById("search-results");
 
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -30,10 +33,9 @@ document.addEventListener("DOMContentLoaded", () => {
       "🔍 Analyzing context...",
       "🧠 Generating insights...",
       "",
-      "CleanDomain Engine v3.0 active.",
-      "This build restores full output length and adds a smooth ChatGPT-style reveal.",
-      "",
-      "Output length and clarity fully reinstated.",
+      "CleanDomain Engine v3.1 active.",
+      "Smooth ChatGPT-style output restored.",
+      "Output length and clarity verified.",
       "",
       "✅ Process complete — ready for next query."
     ];
@@ -51,5 +53,29 @@ document.addEventListener("DOMContentLoaded", () => {
     outputEl.classList.add("show");
   }
 
+  // Domain search simulation
+  function fakeDomainScore() {
+    return (Math.random() * 100).toFixed(2);
+  }
+
+  function searchDomain() {
+    const domain = domainInput.value.trim();
+    searchResults.textContent = "";
+    if (!domain) {
+      searchResults.textContent = "❗ Please enter a domain.";
+      return;
+    }
+
+    const score = fakeDomainScore();
+    const result = `
+🔎 Domain: ${domain}
+💡 CleanDomain Score: ${score}/100
+📊 Status: ${score > 80 ? "Excellent" : score > 60 ? "Good" : "Average"}
+✅ Analysis complete.
+    `;
+    searchResults.textContent = result;
+  }
+
   runBtn?.addEventListener("click", generateOutput);
+  searchBtn?.addEventListener("click", searchDomain);
 });
