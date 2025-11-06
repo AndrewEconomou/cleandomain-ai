@@ -814,3 +814,109 @@ body.dark-mode .report-form input {
 body.dark-mode .close-btn {
   color: #fff;
 }
+/* === CLEAN DOMAIN MODAL UPGRADE — GLASS STYLE === */
+#reportModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  animation: fadeInModal 0.4s ease forwards;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-content {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 2rem 1.6rem;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+  animation: modalUp 0.4s ease;
+  color: #111;
+}
+
+@keyframes modalUp {
+  from { transform: translateY(25px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+#closeModal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.4rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #444;
+  transition: 0.3s;
+}
+
+#closeModal:hover {
+  color: #000;
+  transform: scale(1.1);
+}
+
+/* Button glow */
+#reportForm button.primary-btn {
+  background: linear-gradient(90deg, #007aff, #4fc3f7);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  width: 100%;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 12px rgba(0, 122, 255, 0.4);
+}
+#reportForm button.primary-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 18px rgba(0, 122, 255, 0.65);
+}
+
+/* Success message */
+.success-msg {
+  text-align: center;
+  background: rgba(0, 200, 83, 0.1);
+  color: #00c853;
+  border: 1px solid rgba(0, 200, 83, 0.3);
+  border-radius: 10px;
+  padding: 1rem;
+  font-weight: 600;
+}
+
+/* Dark mode adaptation */
+body.dark-mode #reportModal {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+body.dark-mode .modal-content {
+  background: rgba(25, 25, 30, 0.75);
+  color: #f0f0f0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+}
+
+body.dark-mode #closeModal {
+  color: #ccc;
+}
+body.dark-mode #closeModal:hover {
+  color: #fff;
+}
+
+body.dark-mode #reportForm button.primary-btn {
+  background: linear-gradient(90deg, #4fc3f7, #007aff);
+  box-shadow: 0 0 12px rgba(79, 195, 247, 0.4);
+}
