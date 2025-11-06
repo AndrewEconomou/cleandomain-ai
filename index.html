@@ -397,5 +397,161 @@
   if (btn) btn.addEventListener('click', run);
 })();
 </script>
+  <!-- Lightweight Charts (TradingView) -->
+<script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
+
+<script>
+// ====== MT4-STYLE CHART ENGINE ======
+(function(){
+  const $ = id => document.getElementById(id);
+  const root = document.documentElement;
+  const isDark = () => document.body.classList.contains('dark-mode');
+
+  // Simple demo data generator (replace with real OHLC later)
+  function generateOHLC(n=200, start=100){
+    const out = [];
+    let prev = start;
+    for (let i=0;i<n;i++){
+      const date = new Date(); date.setDate(date.getDate() - (n-i));
+      const vol = (Math.random()*2-1) * 1.5;
+      const open = prev;
+      const close = Math.max(0.1, open + vol);
+      const high = Math.max(open, close) + Math.random()*0.8;
+      const low = Math.min(open, close) - Math.random()*0.8;
+      out.push({ time: Math.floor(date.getTime()/1000), open, high, low, close });
+      prev = close;
+    }
+    return out;
+  }
+
+  // Indicators
+  const SMA = (data, len=20) => {
+    const r = [];
+    for (let i=0;i<data.length;i++){
+      if (i < len-1) continue;
+      let s = 0;
+      for (let j=0;j<len;j++) s += data[i-j].close;
+      r.push({ time: data[i].time, value: s/len });
+    }
+    return r;
+  };
+  const EMA = (data, len=50) => {
+    const k = 2/(len+1);
+    const r = [];
+    let emaPrev = data[0].close;
+    for (let i=0;i<data.length;i++){
+      const v = data[i].close * k + emaPrev*(1-k);
+      emaPrev = v;
+      if (i>=len-1) r.push({ time: data[i].time, value: v });
+    }
+    return r;
+  };
+  const RSI = (data, len=14) => {
+    const r = [];
+    let gains=0, losses=0;
+    for (let i=1;i<=len;i++){
+      const ch = data[i].close - data[i-1].close;
+      if (ch>=0) gains += ch; else losses -= ch;
+    }
+    for (let i=len;i<data.length;i++){
+      const ch = data[i].close - data[i-1].close;
+      const g = ch>0? ch:0, l = ch<0? -ch:0;
+      gains = (gains*(len-1) + g)/len;
+      losses = (losses*(len-1) + l)/len;
+      const rs = losses===0 ? 100 : gains/losses;
+      const rsi = 100 - (100/(1+rs));
+      r.push({ time: data[i].time, value: rsi });
+    }
+    return r;
+  };
+
+  let chart, candleSeries, smaSeries, emaSeries, rsiChart, rsiSeries;
+
+  function makeChartTheme(){
+    return isDark() ? {
+      layout: { background: { color:'#0b0c10' }, textColor:'#e9e9e9' },
+      grid:   { vertLines: { color:'#1c2430' }, horzLines: { color:'#1c2430' } },
+      crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+      rightPriceScale: { borderColor:'#2a2f3a' },
+      timeScale: { borderColor:'#2a2f3a' }
+    } : {
+      layout: { background: { color:'#ffffff' }, textColor:'#111' },
+      grid:   { vertLines: { color:'#f1f3f7' }, horzLines: { color:'#f1f3f7' } },
+      crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+      rightPriceScale: { borderColor:'#dfe3eb' },
+      timeScale: { borderColor:'#dfe3eb' }
+    };
+  }
+
+  function renderChart(ohlc){
+    const ca = $('chartArea');
+    ca.innerHTML = '';
+    chart = LightweightCharts.createChart(ca, {
+      width: ca.clientWidth,
+      height: ca.clientHeight,
+      ...makeChartTheme(),
+    });
+    candleSeries = chart.addCandlestickSeries({
+      upColor:'#26a69a', downColor:'#ef5350', borderVisible:false, wickUpColor:'#26a69a', wickDownColor:'#ef5350'
+    });
+    candleSeries.setData(ohlc);
+
+    // Indicators on main chart
+    if ($('indSMA').checked){
+      smaSeries = chart.addLineSeries({ color:'#4ea6ff', lineWidth:2 });
+      smaSeries.setData(SMA(ohlc, 20));
+    }
+    if ($('indEMA').checked){
+      emaSeries = chart.addLineSeries({ color:'#ffb74d', lineWidth:2 });
+      emaSeries.setData(EMA(ohlc, 50));
+    }
+
+    // RSI sub-chart
+    const ra = $('rsiArea');
+    ra.innerHTML = '';
+    rsiChart = LightweightCharts.createChart(ra, {
+      width: ra.clientWidth,
+      height: ra.clientHeight,
+      ...makeChartTheme(),
+    });
+    rsiSeries = rsiChart.addLineSeries({ color:'#9c27b0', lineWidth:2 });
+    rsiSeries.setData(RSI(ohlc, 14));
+
+    // resize observers
+    const ro = new ResizeObserver(() => {
+      chart.applyOptions({ width: ca.clientWidth, height: ca.clientHeight });
+      rsiChart.applyOptions({ width: ra.clientWidth, height: ra.clientHeight });
+    });
+    ro.observe(ca); ro.observe(ra);
+  }
+
+  function loadDataAndRender(){
+    // For now: generate demo OHLC. Later: replace with your API/CSV fetch.
+    const ohlc = generateOHLC(300, 1.2);
+    renderChart(ohlc);
+  }
+
+  // Events
+  const loadBtn = $('chartLoad');
+  if (loadBtn) loadBtn.addEventListener('click', () => {
+    loadBtn.classList.add('loading');
+    setTimeout(() => {
+      loadDataAndRender();
+      loadBtn.classList.remove('loading'); loadBtn.classList.add('flash');
+      setTimeout(()=>loadBtn.classList.remove('flash'), 900);
+    }, 450);
+  });
+
+  // Initial paint
+  if ($('chartArea')) loadDataAndRender();
+
+  // Re-theme on dark toggle (listens to storage and click you already wired)
+  const origSetItem = localStorage.setItem;
+  localStorage.setItem = function(k,v){
+    origSetItem.apply(this, arguments);
+    if (k==='theme') { setTimeout(loadDataAndRender, 50); }
+  };
+})();
+</script>
 </body>
 </html>
