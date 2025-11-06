@@ -28,8 +28,26 @@
   <main>
     <section class="hero">
       <div class="container">
-        <h1>Fair-Value Domain Comparison</h1>
-        <p class="sub">Transparent pricing. Reliable registrars. No pay-to-rank. Ever.</p>
+        <!-- HERO / SEARCH -->
+<section class="hero">
+  <div class="container">
+    <h1 class="hero-title">Smarter Domain Decisions — Powered by AI.</h1>
+    <p class="sub">Transparent pricing. Reliable registrars. Real insights. Built for the next era of digital ownership.</p>
+
+    <form id="searchForm" class="searchbar" onsubmit="return false;">
+      <input id="domainInput" type="text" placeholder="Search a TLD or keyword (e.g., .ai, finance, crypto)" inputmode="text" spellcheck="false" />
+      <button id="searchBtn" class="primary-btn" type="submit">Search</button>
+    </form>
+
+    <div class="micro-kpis">
+      <div><strong>Real 3-Year Cost</strong><span>Registration + Renewal math done for you</span></div>
+      <div><strong>Reliability Index</strong><span>Support, uptime, speed — combined</span></div>
+      <div><strong>Promo Honesty</strong><span>Teaser vs renewal clearly flagged</span></div>
+    </div>
+
+    <div id="searchResultMsg" style="margin-top:1rem;font-weight:600;font-size:1.05em;"></div>
+  </div>
+</section>
 
         <form id="searchForm" class="searchbar" onsubmit="return false;">
           <input id="domainInput" type="text" placeholder="Search a TLD or keyword (e.g., .ai, finance, crypto)" inputmode="text" spellcheck="false" />
